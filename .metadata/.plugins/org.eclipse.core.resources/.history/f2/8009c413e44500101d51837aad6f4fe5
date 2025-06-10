@@ -1,0 +1,53 @@
+package com.pentagon.golocal.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import com.pentagon.golocal.dto.LoginRequest;
+import com.pentagon.golocal.dto.RegisterRequest;
+import com.pentagon.golocal.entity.User;
+import com.pentagon.golocal.repository.UserRepository;
+
+import jakarta.transaction.Transactional;
+
+@Service
+public class AuthenticationService {
+	@Autowired private UserRepository userRepository;
+	@Autowired private PasswordEncoder passwordEncoder;
+	@Autowired private AuthenticationManager authenticationManager;
+	@Autowired private JwtService jwtService;
+	
+	@Transactional
+	public void registerUser(RegisterRequest registerRequest) {
+		if (userRepository.existsByUsername(registerRequest.getUsername())) {
+			throw new IllegalArgumentException("User already exists!");
+		}
+		
+		User user = new User(
+					registerRequest.getUsername(),
+					passwordEncoder.encode(registerRequest.getPassword()),
+					registerRequest.getRole(),
+					true
+				);
+		
+		userRepository.save(user);
+	}
+	
+	public String login(LoginRequest loginRequest) {
+		System.out.println("Hii");
+		Authentication authentication = authenticationManager.authenticate(
+					new UsernamePasswordAuthenticationToken(
+								loginRequest.getUsername(),
+								loginRequest.getPassword()
+							)
+				);
+		
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		return jwtService.generateToken(authentication);
+	}
+}

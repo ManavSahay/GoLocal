@@ -1,0 +1,5 @@
+package com.pentagon.golocal.service;
+
+public class UserDetailsService {
+
+}

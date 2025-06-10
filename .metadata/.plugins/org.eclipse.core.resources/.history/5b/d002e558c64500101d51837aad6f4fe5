@@ -1,0 +1,22 @@
+package com.pentagon.golocal.service;
+
+import java.util.Date;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+
+public class JwtService {
+
+	@Value("${app.jwt.secret}")
+	private String jwtSecret;
+
+	@Value("${app.jwt.expiration}")
+	private long jwtExpirationMs;
+	
+	public String generateToken(Authentication authentication, long expirationTime) {
+		UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
+		Date now = new Date();
+		Date expiryDate = new Date(now + jwtExpirationMs);
+	}
+}

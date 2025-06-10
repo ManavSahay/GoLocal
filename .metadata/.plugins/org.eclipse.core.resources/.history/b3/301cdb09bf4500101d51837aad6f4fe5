@@ -1,0 +1,67 @@
+package com.pentagon.golocal.entity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "userauth")
+public class User {
+
+	@Id
+	@Column
+	private String user_id;
+	@Column
+	private String password;
+	@Column
+	private Role user_role;
+	@Column
+	private boolean isDeleted;
+
+	public String getUser_id() {
+		return user_id;
+	}
+
+	public void setUser_id(String user_id) {
+		this.user_id = user_id;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Role getUser_role() {
+		return user_role;
+	}
+
+	public void setUser_role(Role user_role) {
+		this.user_role = user_role;
+	}
+
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
+
+	public User(String user_id, String password, Role user_role, boolean isDeleted) {
+		super();
+		this.user_id = user_id;
+		this.password = password;
+		this.user_role = user_role;
+		this.isDeleted = isDeleted;
+	}
+
+	public User() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+}

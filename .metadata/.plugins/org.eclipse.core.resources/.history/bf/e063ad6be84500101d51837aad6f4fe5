@@ -1,0 +1,76 @@
+package com.pentagon.golocal.service;
+
+import java.util.Date;
+
+import javax.crypto.SecretKey;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
+
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
+
+@Service
+public class JwtService {
+
+//	@Value("${app.jwt.secret}")
+	private String jwtSecret = "5367566859703373367639792F423F452848284D6251655468576D5A71347437";
+
+//	@Value("${app.jwt.expiration}")
+	private long jwtExpirationMs = 3600000;
+	
+	@Value("${app.jwt.refresh-expiration}")
+	private long refreshExpirationMs;
+	
+	public String generateToken(Authentication authentication) {
+		UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
+		Date now = new Date();
+		Date expiryDate = new Date(now.getTime() + jwtExpirationMs);
+		
+		return Jwts.builder()
+				.header()
+				.add("typ", "JWT")
+				.and()
+				.subject(userPrincipal.getUsername())
+				.claim("accessToken", userPrincipal.getAuthorities())
+				.issuedAt(now)
+				.expiration(expiryDate)
+				.signWith(getSignInKey()).compact();
+	}
+	
+	public boolean isValidToken(String token, UserDetails userDetails) {
+		final String username = extractUsernameFromToken(token);
+		
+		if (!username.equals(userDetails.getUsername())) {
+			return false;
+		}
+		
+		try {
+			Jwts.parser()
+				.verifyWith(getSignInKey())
+				.build()
+				.parseSignedClaims(token);
+			return true;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return false;
+		}
+	}
+	
+	public String extractUsernameFromToken(String token) {
+		return Jwts.parser()
+				.verifyWith(getSignInKey())
+				.build()
+				.parseSignedClaims(token)
+				.getPayload()
+				.getSubject();
+	}
+	
+	private SecretKey getSignInKey() {
+		byte[] keyBytes = Decoders.BASE64.decode(jwtSecret);
+		return Keys.hmacShaKeyFor(keyBytes);
+	}
+}

@@ -1,0 +1,52 @@
+package com.pentagon.golocal.service;
+
+import java.util.Date;
+
+import javax.crypto.SecretKey;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
+
+public class JwtService {
+
+	@Value("${app.jwt.secret}")
+	private String jwtSecret;
+
+	@Value("${app.jwt.expiration}")
+	private long jwtExpirationMs;
+	
+	public String generateToken(Authentication authentication, long expirationTime) {
+		UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
+		Date now = new Date();
+		Date expiryDate = new Date(now.getTime() + jwtExpirationMs);
+		
+		return Jwts.builder()
+				.header()
+				.add("typ", "JWT")
+				.and()
+				.subject(userPrincipal.getUsername())
+				.claim("accessToken", "Token")
+				.issuedAt(now)
+				.expiration(expiryDate)
+				.signWith(getSignInKey()).compact();
+	}
+	
+	public String extractUsernameFromToken(String token) {
+		return Jwts.parser()
+				.verifyWith(getSignInKey())
+				.build()
+				.parseSignedClaims(token)
+				.getPayload()
+				.getSubject();
+	}
+	
+	private SecretKey getSignInKey() {
+		byte[] keyBytes = Decoders.BASE64.decode(jwtSecret);
+		return Keys.hmacShaKeyFor(keyBytes);
+	}
+}

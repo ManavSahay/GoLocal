@@ -1,0 +1,30 @@
+package com.pentagon.golocal.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import com.pentagon.golocal.entity.User;
+import com.pentagon.golocal.repository.UserRepository;
+
+import jakarta.transaction.Transactional;
+
+@Service
+public class AuthenticationService {
+	@Autowired private UserRepository userRepository;
+	@Autowired private PasswordEncoder passwordEncoder;
+	
+	@Transactional
+	public void registerUser(User requestUser) {
+		if (userRepository.existsByUsername(requestUser.getUsername())) {
+			throw new IllegalArgumentException("User already exists!");
+		}
+		
+		User user = new User(
+					requestUser.getUsername(),
+					requestUser.getPassword(),
+					requestUser.getRole(),
+					true
+				);
+	}
+}

@@ -1,0 +1,15 @@
+package com.pentagon.golocal.service;
+
+import org.springframework.beans.factory.annotation.Value;
+
+public class JwtService {
+
+	@Value("${app.jwt.secret}")
+	private String jwtSecret;
+
+	@Value("${app.jwt.expiration}")
+	private long jwtExpirationMs;
+
+	@Value("${app.jwt.refresh-expiration}")
+	private long refreshExpirationMs;
+}
