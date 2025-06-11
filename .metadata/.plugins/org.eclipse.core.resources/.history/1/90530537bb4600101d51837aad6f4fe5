@@ -1,0 +1,91 @@
+package com.pentagon.golocal.dto;
+
+import com.pentagon.golocal.entity.Role;
+
+public class RegisterCustomerRequest {
+	private String username;
+	private String customerName;
+	private String location;
+	private Long mobileNumber;
+	private String email;
+	private int rating;
+	private byte[] profilePicture;
+	private int noOfBookings;
+
+	public RegisterCustomerRequest(String username, String password, Role role, boolean isDeleted, String username2,
+			String customerName, String location, Long mobileNumber, String email, int rating, byte[] profilePicture,
+			int noOfBookings) {
+		username = username2;
+		this.customerName = customerName;
+		this.location = location;
+		this.mobileNumber = mobileNumber;
+		this.email = email;
+		this.rating = rating;
+		this.profilePicture = profilePicture;
+		this.noOfBookings = noOfBookings;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getCustomerName() {
+		return customerName;
+	}
+
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public Long getMobileNumber() {
+		return mobileNumber;
+	}
+
+	public void setMobileNumber(Long mobileNumber) {
+		this.mobileNumber = mobileNumber;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
+
+	public byte[] getProfilePicture() {
+		return profilePicture;
+	}
+
+	public void setProfilePicture(byte[] profilePicture) {
+		this.profilePicture = profilePicture;
+	}
+
+	public int getNoOfBookings() {
+		return noOfBookings;
+	}
+
+	public void setNoOfBookings(int noOfBookings) {
+		this.noOfBookings = noOfBookings;
+	}
+}

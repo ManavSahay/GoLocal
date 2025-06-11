@@ -1,0 +1,42 @@
+package com.pentagon.golocal.entity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Id;
+
+public class Provider {
+	
+	@Id
+	@Column(name = "customer_id")
+	private String username;
+	
+	@Column(name = "customer_name")
+	private String customerName;
+	
+	@Column(name = "location")
+	private String location;
+	
+	@Column(name = "mobile_number")
+	private Long mobileNumber;
+	
+	@Column(name = "email_id")
+	private String email;
+	
+	@Column(name = "rating")
+	private int rating;
+	
+	@Column(name = "profile_picture")
+	private byte[] profilePicture;
+	
+	@Column(name = "service")
+	private String service;
+	
+	@Column(name = "experience")
+	private int experience;
+	
+	@Column(name = "description")
+	private byte[] description;
+	
+	@Column(name = "no_of_times_booked")
+	private int noOfTimesBooked;
+
+}

@@ -1,0 +1,14 @@
+package com.pentagon.golocal.entity;
+
+import java.util.Date;
+
+public class Booking {
+	private String bookingId;
+	private String providerId;
+	private String customerId;
+	private String location;
+	private Date dateTime;
+	private float amountPaid;
+	private String typeOfJob;
+	private boolean status;
+}

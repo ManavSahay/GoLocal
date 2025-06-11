@@ -3,3 +3,7 @@
 1749532330656	Encapsulate field 'isDeleted, ...'
 1749536609309	Delete element
 1749558020975	Delete element
+1749614396540	Rename type 'TryController'
+1749632646551	Rename type 'UserInfo'
+1749636564899	Delete element
+1749641232312	Move compilation unit

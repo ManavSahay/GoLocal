@@ -1,0 +1,5 @@
+package com.pentagon.golocal.repository;
+
+public class CustomerRepository {
+
+}

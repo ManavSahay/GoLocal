@@ -2,17 +2,10 @@ package com.pentagon.golocal.dto;
 
 import com.pentagon.golocal.entity.Role;
 
-import jakarta.validation.constraints.NotBlank;
-
 public class RegisterRequest {
-	@NotBlank(message = "Username cannot be blank")
 	private String username;
-	
-	@NotBlank(message = "Password cannot be blank")
 	private String password;
-	
 	private Role role;
-	
 	private boolean isDeleted;
 
 	public String getUsername() {
@@ -47,8 +40,7 @@ public class RegisterRequest {
 		this.isDeleted = isDeleted;
 	}
 
-	public RegisterRequest(@NotBlank(message = "Username cannot be blank") String username,
-			@NotBlank(message = "Password cannot be blank") String password, Role role, boolean isDeleted) {
+	public RegisterRequest(String username, String password, Role role, boolean isDeleted) {
 		super();
 		this.username = username;
 		this.password = password;
@@ -60,6 +52,5 @@ public class RegisterRequest {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	
+
 }

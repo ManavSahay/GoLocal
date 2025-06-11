@@ -1,0 +1,27 @@
+package com.pentagon.golocal.dto;
+
+import jakarta.persistence.Column;
+
+public class RegisterProviderRequest extends RegisterRequest {
+	private String username;
+	
+	private String customerName;
+	
+	private String location;
+	
+	private Long mobileNumber;
+	
+	private String email;
+	
+	private int rating;
+	
+	private byte[] profilePicture;
+	
+	private String service;
+	
+	private int experience;
+	
+	private byte[] description;
+	
+	private int noOfTimesBooked;
+}

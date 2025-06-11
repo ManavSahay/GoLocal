@@ -1,0 +1,35 @@
+package com.pentagon.golocal.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.pentagon.golocal.dto.*;
+import com.pentagon.golocal.service.AuthenticationService;
+
+@RestController
+@RequestMapping("/api/auth")
+public class AuthenticationController {
+	@Autowired AuthenticationService authenticationService;
+	
+	@PostMapping("/register")
+	public ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest) {
+		authenticationService.registerUser(registerRequest);
+		return ResponseEntity.ok(registerRequest);
+	}
+	
+	@PostMapping("/login")
+	public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+		TokenPair tokenPair = authenticationService.login(loginRequest);
+		
+		if (tokenPair == null) {
+			return new ResponseEntity<>("Invalid credentials", HttpStatus.BAD_REQUEST);
+		}
+		
+		return ResponseEntity.ok(tokenPair);
+	}
+}

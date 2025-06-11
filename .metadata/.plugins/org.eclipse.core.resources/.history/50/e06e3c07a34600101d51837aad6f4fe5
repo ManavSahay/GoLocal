@@ -1,0 +1,9 @@
+package com.pentagon.golocal.entity;
+
+public class Provider {
+	private UserInfo userInfo;
+	private String service;
+	private int experience;
+	private byte[] description;
+	private int noOfTimesBooked;
+}

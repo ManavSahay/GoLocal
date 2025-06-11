@@ -1,0 +1,108 @@
+package com.pentagon.golocal.service;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.crypto.SecretKey;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
+
+import com.pentagon.golocal.dto.TokenPair;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
+
+@Service
+public class JwtService {
+
+	@Value("${app.jwt.secret}")
+	private String jwtSecret;
+
+//	@Value("${app.jwt.expiration}")
+	private long jwtExpirationMs = 3600000;
+	
+//	@Value("${app.jwt.refresh-expiration}")
+	private long refreshExpirationMs = 86400000;
+	
+	public String generateAccessToken(Authentication authentication) {
+		return generateToken(authentication, jwtExpirationMs, new HashMap<>());
+	}
+	
+	public String generateRefreshToken(Authentication authentication) {
+		Map<String, String> claims = new HashMap<>();
+		claims.put("tokenType", "refresh");
+		
+		return generateToken(authentication, refreshExpirationMs, claims);
+	}
+	
+	public boolean isValidToken(String token, UserDetails userDetails) {
+		final String username = extractUsernameFromToken(token);
+		
+		if (!username.equals(userDetails.getUsername())) {
+			return false;
+		}
+		
+		try {
+			Jwts.parser()
+				.verifyWith(getSignInKey())
+				.build()
+				.parseSignedClaims(token);
+			return true;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return false;
+		}
+	}
+		
+	public boolean isRefreshToken(String token) {
+		Claims claims = Jwts.parser()
+				.verifyWith(getSignInKey())
+				.build()
+				.parseSignedClaims(token)
+				.getPayload();
+		
+		return "refresh".equals(claims.get("tokenType"));
+	}
+	
+	public String extractUsernameFromToken(String token) {
+		return Jwts.parser()
+				.verifyWith(getSignInKey())
+				.build()
+				.parseSignedClaims(token)
+				.getPayload()
+				.getSubject();
+	}
+	
+	public String generateToken(Authentication authentication, long expirationTime, Map<String, String> claims) {
+		UserDetails userPrincipal = (UserDetails) authentication.getPrincipal();
+		Date now = new Date();
+		Date expiryDate = new Date(now.getTime() + expirationTime);
+		
+		return Jwts.builder()
+				.header()
+				.add("typ", "JWT")
+				.and()
+				.subject(userPrincipal.getUsername())
+				.claims(claims)
+				.issuedAt(now)
+				.expiration(expiryDate)
+				.signWith(getSignInKey()).compact();
+	}
+	
+	private SecretKey getSignInKey() {
+		byte[] keyBytes = Decoders.BASE64.decode(jwtSecret);
+		return Keys.hmacShaKeyFor(keyBytes);
+	}
+	
+	public TokenPair generateTokenPair(Authentication authentication) {
+		String accessToken = generateAccessToken(authentication);
+		String refreshToken = generateRefreshToken(authentication);
+		return new TokenPair(accessToken, refreshToken);
+	}
+}

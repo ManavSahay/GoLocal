@@ -1,0 +1,8 @@
+package com.pentagon.golocal.entity;
+
+public class Rating {
+	private String ratingId;
+	private String bookingId;
+	private int ratingByCustomer;
+	private int ratingByProvider;
+}

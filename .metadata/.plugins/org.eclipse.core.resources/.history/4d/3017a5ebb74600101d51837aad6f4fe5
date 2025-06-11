@@ -1,0 +1,21 @@
+package com.pentagon.golocal.service.implementation;
+
+import com.pentagon.golocal.dto.RegisterCustomerRequest;
+import com.pentagon.golocal.dto.RegisterProviderRequest;
+import com.pentagon.golocal.service.UsersRegisterService;
+
+public class UserRegisterServiceImpl implements UsersRegisterService {
+
+	@Override
+	public RegisterCustomerRequest registerCustomer(RegisterCustomerRequest registerCustomerRequest) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public RegisterProviderRequest registerProvider(RegisterProviderRequest registerProviderRequest) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+}

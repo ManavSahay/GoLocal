@@ -1,0 +1,7 @@
+package com.pentagon.golocal.service.implementation;
+
+import com.pentagon.golocal.entity.Customer;
+
+public interface UsersRegisterService {
+	Customer registerCustomer(Customer customer);
+}

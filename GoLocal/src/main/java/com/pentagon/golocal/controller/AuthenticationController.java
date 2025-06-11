@@ -10,14 +10,22 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.pentagon.golocal.dto.*;
 import com.pentagon.golocal.service.AuthenticationService;
+import com.pentagon.golocal.service.UsersRegisterService;
 
 @RestController
 @RequestMapping("/api/auth")
 public class AuthenticationController {
 	@Autowired AuthenticationService authenticationService;
+	@Autowired UsersRegisterService usersRegisterService;
 	
-	@PostMapping("/register")
-	public ResponseEntity<?> register(@RequestBody RegisterRequest registerRequest) {
+	@PostMapping("/register-provider")
+	public ResponseEntity<?> registerProvider(@RequestBody RegisterProviderRequest registerRequest) {
+		authenticationService.registerUser(registerRequest);
+		return ResponseEntity.ok(registerRequest);
+	}
+	
+	@PostMapping("/register-customer")
+	public ResponseEntity<?> registerCustomer(@RequestBody RegisterCustomerRequest registerRequest) {
 		authenticationService.registerUser(registerRequest);
 		return ResponseEntity.ok(registerRequest);
 	}

@@ -1,0 +1,36 @@
+package com.pentagon.golocal.service.implementation;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.pentagon.golocal.dto.RegisterCustomerRequest;
+import com.pentagon.golocal.dto.RegisterProviderRequest;
+import com.pentagon.golocal.entity.Customer;
+import com.pentagon.golocal.repository.CustomerRepository;
+import com.pentagon.golocal.repository.ProviderRepository;
+import com.pentagon.golocal.service.UsersRegisterService;
+
+public class UserRegisterServiceImpl implements UsersRegisterService {
+	@Autowired CustomerRepository customerRepository;
+	@Autowired ProviderRepository providerRepository;
+
+	@Override
+	public RegisterCustomerRequest registerCustomer(RegisterCustomerRequest registerCustomerRequest) {
+		Customer customer = new Customer();
+		customer.setUsername(registerCustomerRequest.getUsername());
+		customer.setCustomerName(registerCustomerRequest.getCustomerName());
+		customer.setLocation(registerCustomerRequest.getLocation());
+		customer.setMobileNumber(registerCustomerRequest.getMobileNumber());
+		customer.setEmail(registerCustomerRequest.getEmail());
+		customer.setRating(registerCustomerRequest.getRating());
+		customer.setProfilePicture(registerCustomerRequest.getProfilePicture());
+		customer.setNoOfBookings(registerCustomerRequest.getNoOfBookings());
+		return null;
+	}
+
+	@Override
+	public RegisterProviderRequest registerProvider(RegisterProviderRequest registerProviderRequest) {
+		
+		return null;
+	}
+
+}

@@ -1,0 +1,49 @@
+package com.pentagon.golocal.entity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Embedded;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "Customer")
+public class Customer {
+	@Id
+	private String username;
+
+	@Embedded
+	@MapsId("username")
+	private BasicInfo basicInfo;
+	
+	@Column(name = "")
+	private int noOfBookings;
+
+	public BasicInfo getBasicInfo() {
+		return basicInfo;
+	}
+
+	public void setBasicInfo(BasicInfo basicInfo) {
+		this.basicInfo = basicInfo;
+	}
+
+	public int getNoOfBookings() {
+		return noOfBookings;
+	}
+
+	public void setNoOfBookings(int noOfBookings) {
+		this.noOfBookings = noOfBookings;
+	}
+
+	public Customer(BasicInfo basicInfo, int noOfBookings) {
+		super();
+		this.basicInfo = basicInfo;
+		this.noOfBookings = noOfBookings;
+	}
+
+	public Customer() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+}

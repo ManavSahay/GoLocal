@@ -1,0 +1,28 @@
+package com.pentagon.golocal.service;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.crypto.SecretKey;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
+
+import com.pentagon.golocal.dto.TokenPair;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.security.Keys;
+
+public interface JwtService {
+	String generateAccessToken(Authentication authentication);
+	String generateRefreshToken(Authentication authentication);
+	boolean isValidToken(String token, UserDetails userDetails);
+	boolean isRefreshToken(String token);
+	String extractUsernameFromToken(String token);
+	TokenPair generateTokenPair(Authentication authentication);
+}

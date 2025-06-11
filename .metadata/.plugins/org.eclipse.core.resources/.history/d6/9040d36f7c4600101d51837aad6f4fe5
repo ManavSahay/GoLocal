@@ -1,0 +1,13 @@
+package com.pentagon.golocal.service;
+
+import org.springframework.stereotype.Service;
+
+import com.pentagon.golocal.dto.LoginRequest;
+import com.pentagon.golocal.dto.RegisterRequest;
+import com.pentagon.golocal.dto.TokenPair;
+
+@Service
+public interface AuthenticationService {
+	void registerUser(RegisterRequest registerRequest);
+	TokenPair login(LoginRequest loginRequest);
+}

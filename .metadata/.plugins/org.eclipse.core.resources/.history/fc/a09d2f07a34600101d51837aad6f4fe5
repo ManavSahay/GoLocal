@@ -1,0 +1,6 @@
+package com.pentagon.golocal.entity;
+
+public class Customer {
+	private UserInfo userInfo;
+	private int noOfBookings;	
+}

@@ -1,0 +1,156 @@
+package com.pentagon.golocal.entity;
+
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "ServiceProvider")
+public class Provider {
+	
+	@Id
+	@Column(name = "customer_id")
+	private String username;
+	
+	@Column(name = "customer_name")
+	private String customerName;
+	
+	@Column(name = "location")
+	private String location;
+	
+	@Column(name = "mobile_number")
+	private Long mobileNumber;
+	
+	@Column(name = "email_id")
+	private String email;
+	
+	@Column(name = "rating")
+	private int rating;
+	
+	@Column(name = "profile_picture")
+	private byte[] profilePicture;
+	
+	@Column(name = "service")
+	private String service;
+	
+	@Column(name = "experience")
+	private int experience;
+	
+	@Column(name = "description")
+	private byte[] description;
+	
+	@Column(name = "no_of_times_booked")
+	private int noOfTimesBooked;
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getCustomerName() {
+		return customerName;
+	}
+
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	public Long getMobileNumber() {
+		return mobileNumber;
+	}
+
+	public void setMobileNumber(Long mobileNumber) {
+		this.mobileNumber = mobileNumber;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
+
+	public byte[] getProfilePicture() {
+		return profilePicture;
+	}
+
+	public void setProfilePicture(byte[] profilePicture) {
+		this.profilePicture = profilePicture;
+	}
+
+	public String getService() {
+		return service;
+	}
+
+	public void setService(String service) {
+		this.service = service;
+	}
+
+	public int getExperience() {
+		return experience;
+	}
+
+	public void setExperience(int experience) {
+		this.experience = experience;
+	}
+
+	public byte[] getDescription() {
+		return description;
+	}
+
+	public void setDescription(byte[] description) {
+		this.description = description;
+	}
+
+	public int getNoOfTimesBooked() {
+		return noOfTimesBooked;
+	}
+
+	public void setNoOfTimesBooked(int noOfTimesBooked) {
+		this.noOfTimesBooked = noOfTimesBooked;
+	}
+
+	public Provider(String username, String customerName, String location, Long mobileNumber, String email, int rating,
+			byte[] profilePicture, String service, int experience, byte[] description, int noOfTimesBooked) {
+		super();
+		this.username = username;
+		this.customerName = customerName;
+		this.location = location;
+		this.mobileNumber = mobileNumber;
+		this.email = email;
+		this.rating = rating;
+		this.profilePicture = profilePicture;
+		this.service = service;
+		this.experience = experience;
+		this.description = description;
+		this.noOfTimesBooked = noOfTimesBooked;
+	}
+
+	public Provider() {
+		super();
+	}
+	
+	
+
+}
