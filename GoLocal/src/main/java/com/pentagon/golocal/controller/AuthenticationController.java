@@ -1,12 +1,10 @@
 package com.pentagon.golocal.controller;
 
+import com.pentagon.golocal.admin_register.AdminCreationAuthority;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.pentagon.golocal.dto.*;
 import com.pentagon.golocal.service.AuthenticationService;
@@ -16,7 +14,7 @@ import com.pentagon.golocal.service.UsersRegisterService;
 @RequestMapping("/api/auth")
 public class AuthenticationController {
 	@Autowired AuthenticationService authenticationService;
-	@Autowired UsersRegisterService usersRegisterService;
+	@Autowired AdminCreationAuthority adminCreationAuthority;
 	
 	@PostMapping("/register-provider")
 	public ResponseEntity<?> registerProvider(@RequestBody RegisterProviderRequest registerRequest) {
@@ -26,6 +24,15 @@ public class AuthenticationController {
 	
 	@PostMapping("/register-customer")
 	public ResponseEntity<?> registerCustomer(@RequestBody RegisterCustomerRequest registerRequest) {
+		authenticationService.registerUser(registerRequest);
+		return ResponseEntity.ok(registerRequest);
+	}
+
+	@PostMapping("/register-admin/{secretKey}")
+	public ResponseEntity<?> registerAdmin(@PathVariable String secretKey, @RequestBody RegisterAdminRequest registerRequest) {
+		if (!adminCreationAuthority.canCreateAdmin(secretKey)) {
+			return new ResponseEntity<>("You cannot create an Admin!", HttpStatus.BAD_REQUEST);
+		}
 		authenticationService.registerUser(registerRequest);
 		return ResponseEntity.ok(registerRequest);
 	}

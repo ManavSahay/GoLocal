@@ -5,7 +5,13 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "Customer")
 public class Customer {
@@ -35,86 +41,5 @@ public class Customer {
 
 	@Column(name = "no_of_bookings")
 	private int noOfBookings;
-
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
-	public String getCustomerName() {
-		return customerName;
-	}
-
-	public void setCustomerName(String customerName) {
-		this.customerName = customerName;
-	}
-
-	public String getLocation() {
-		return location;
-	}
-
-	public void setLocation(String location) {
-		this.location = location;
-	}
-
-	public Long getMobileNumber() {
-		return mobileNumber;
-	}
-
-	public void setMobileNumber(Long mobileNumber) {
-		this.mobileNumber = mobileNumber;
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
-	public int getRating() {
-		return rating;
-	}
-
-	public void setRating(int rating) {
-		this.rating = rating;
-	}
-
-	public byte[] getProfilePicture() {
-		return profilePicture;
-	}
-
-	public void setProfilePicture(byte[] profilePicture) {
-		this.profilePicture = profilePicture;
-	}
-
-	public int getNoOfBookings() {
-		return noOfBookings;
-	}
-
-	public void setNoOfBookings(int noOfBookings) {
-		this.noOfBookings = noOfBookings;
-	}
-
-	public Customer(String username, String customerName, String location, Long mobileNumber, String email, int rating,
-			byte[] profilePicture, int noOfBookings) {
-		super();
-		this.username = username;
-		this.customerName = customerName;
-		this.location = location;
-		this.mobileNumber = mobileNumber;
-		this.email = email;
-		this.rating = rating;
-		this.profilePicture = profilePicture;
-		this.noOfBookings = noOfBookings;
-	}
-
-	public Customer() {
-		super();
-	}
 
 }

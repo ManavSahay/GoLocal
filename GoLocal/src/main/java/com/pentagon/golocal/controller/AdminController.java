@@ -28,7 +28,7 @@ public class AdminController {
 		List<User> allUsers = userRepository.findAll();
 		return ResponseEntity.ok(allUsers);
 	}
-	
+
 	@GetMapping("/get-customers")
 	public ResponseEntity<?> getAllCustomers() {
 		List<Customer> customers = customerRepository.findAll();

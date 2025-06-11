@@ -3,8 +3,7 @@ package com.pentagon.golocal.dto;
 import com.pentagon.golocal.entity.Role;
 
 public class RegisterProviderRequest extends RegisterRequest {
-	private String username;
-	private String customerName;
+	private String providerName;
 	private String location;
 	private Long mobileNumber;
 	private String email;
@@ -15,20 +14,12 @@ public class RegisterProviderRequest extends RegisterRequest {
 	private byte[] description;
 	private int noOfTimesBooked;
 
-	public String getUsername() {
-		return username;
-	}
-
-	public void setUsername(String username) {
-		this.username = username;
-	}
-
 	public String getCustomerName() {
-		return customerName;
+		return providerName;
 	}
 
-	public void setCustomerName(String customerName) {
-		this.customerName = customerName;
+	public void setCustomerName(String providerName) {
+		this.providerName = providerName;
 	}
 
 	public String getLocation() {
@@ -103,12 +94,11 @@ public class RegisterProviderRequest extends RegisterRequest {
 		this.noOfTimesBooked = noOfTimesBooked;
 	}
 
-	public RegisterProviderRequest(String username, String password, Role role, boolean isDeleted, String username2,
-			String customerName, String location, Long mobileNumber, String email, int rating, byte[] profilePicture,
+	public RegisterProviderRequest(String username, String password, Role role, boolean isDeleted,
+			String providerName, String location, Long mobileNumber, String email, int rating, byte[] profilePicture,
 			String service, int experience, byte[] description, int noOfTimesBooked) {
 		super(username, password, role, isDeleted);
-		username = username2;
-		this.customerName = customerName;
+		this.providerName = providerName;
 		this.location = location;
 		this.mobileNumber = mobileNumber;
 		this.email = email;

@@ -1,12 +1,10 @@
 package com.pentagon.golocal.service;
 
-import com.pentagon.golocal.dto.LoginRequest;
-import com.pentagon.golocal.dto.RegisterCustomerRequest;
-import com.pentagon.golocal.dto.RegisterProviderRequest;
-import com.pentagon.golocal.dto.TokenPair;
+import com.pentagon.golocal.dto.*;
 
 public interface AuthenticationService {
 	void registerUser(RegisterCustomerRequest registerCustomerRequest);
 	void registerUser(RegisterProviderRequest registerRequest);
+	void registerUser(RegisterAdminRequest registerRequest);
 	TokenPair login(LoginRequest loginRequest);
 }

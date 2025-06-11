@@ -1,5 +1,9 @@
 package com.pentagon.golocal.service.implementation;
 
+import com.pentagon.golocal.dto.RegisterAdminRequest;
+import com.pentagon.golocal.dto.RegisterRequest;
+import com.pentagon.golocal.entity.Admin;
+import com.pentagon.golocal.repository.AdminRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +19,7 @@ import com.pentagon.golocal.service.UsersRegisterService;
 public class UserRegisterServiceImpl implements UsersRegisterService {
 	@Autowired CustomerRepository customerRepository;
 	@Autowired ProviderRepository providerRepository;
+	@Autowired AdminRepository adminRepository;
 
 	@Override
 	public Customer registerCustomer(RegisterCustomerRequest registerCustomerRequest) {
@@ -47,6 +52,16 @@ public class UserRegisterServiceImpl implements UsersRegisterService {
 		provider.setNoOfTimesBooked(registerProviderRequest.getNoOfTimesBooked());
 		
 		return providerRepository.save(provider);
+	}
+
+	@Override
+	public Admin registerAdmin(RegisterAdminRequest registerRequest) {
+		Admin admin = new Admin();
+		admin.setAdminId(registerRequest.getUsername());
+		admin.setAdminName(registerRequest.getAdminName());
+		admin.setAdminPassword(registerRequest.getPassword());
+
+		return adminRepository.save(admin);
 	}
 
 }

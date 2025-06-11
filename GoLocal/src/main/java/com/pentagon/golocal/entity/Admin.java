@@ -12,16 +12,15 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "userauth")
-public class User {
+@Table(name = "AdminDetails")
+public class Admin {
+    @Id
+    @Column
+    private String adminId;
 
-	@Id
-	@Column(name = "username")
-	private String username;
-	@Column(name = "password")
-	private String password;
-	@Column(name = "user_role")
-	private Role role;
-	@Column(name = "is_deleted")
-	private boolean isDeleted;
+    @Column
+    private String adminName;
+
+    @Column
+    private String adminPassword;
 }
