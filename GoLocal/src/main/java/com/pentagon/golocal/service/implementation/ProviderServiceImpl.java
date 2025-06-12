@@ -57,12 +57,10 @@ public class ProviderServiceImpl implements ProviderService {
         findProvider.setLocation(provider.getLocation());
         findProvider.setMobileNumber(provider.getMobileNumber());
         findProvider.setEmail(provider.getEmail());
-        findProvider.setRating(provider.getRating());
         findProvider.setProfilePicture(provider.getProfilePicture());
         findProvider.setService(provider.getService());
         findProvider.setExperience(provider.getExperience());
         findProvider.setDescription(provider.getDescription().getBytes(StandardCharsets.UTF_8));
-        findProvider.setNoOfTimesBooked(provider.getNoOfTimesBooked());
 
         return providerRepository.save(findProvider);
     }

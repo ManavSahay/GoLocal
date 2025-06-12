@@ -10,10 +10,8 @@ public class RegisterProviderRequest extends RegisterRequest {
 	private String location;
 	private Long mobileNumber;
 	private String email;
-	private int rating;
 	private byte[] profilePicture;
 	private String service;
 	private int experience;
 	private String description;
-	private int noOfTimesBooked;
 }

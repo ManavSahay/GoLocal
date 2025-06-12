@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.pentagon.golocal.dto.RegisterProviderRequest;
 import com.pentagon.golocal.dto.RegisterServiceRequest;
+import com.pentagon.golocal.dto.UpdateCustomerRequest;
 import com.pentagon.golocal.dto.UpdateProviderRequest;
 import com.pentagon.golocal.entity.Provider;
 import com.pentagon.golocal.entity.ServiceEntity;
@@ -55,8 +56,8 @@ public class AdminController {
 	}
 
 	@PutMapping("/update-customer")
-	public ResponseEntity<?> updateCustomer(@RequestBody Customer customer) {
-		Customer updatedCustomer = customerService.updateCustomer(customer);
+	public ResponseEntity<?> updateCustomer(@RequestBody UpdateCustomerRequest updateCustomerRequest) {
+		Customer updatedCustomer = customerService.updateCustomer(updateCustomerRequest);
 
 		if (updatedCustomer == null) {
 			return new ResponseEntity<>("Customer does not exists!", HttpStatus.BAD_REQUEST);

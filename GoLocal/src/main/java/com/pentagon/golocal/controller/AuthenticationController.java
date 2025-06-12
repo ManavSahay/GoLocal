@@ -1,6 +1,7 @@
 package com.pentagon.golocal.controller;
 
 import com.pentagon.golocal.admin_register.AdminCreationAuthority;
+import jakarta.servlet.http.Cookie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,6 +45,8 @@ public class AuthenticationController {
 		if (tokenPair == null) {
 			return new ResponseEntity<>("Invalid credentials", HttpStatus.BAD_REQUEST);
 		}
+
+		Cookie cookie = new Cookie("username", loginRequest.getUsername());
 		
 		return ResponseEntity.ok(tokenPair);
 	}

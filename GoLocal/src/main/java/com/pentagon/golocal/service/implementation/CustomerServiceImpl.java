@@ -1,7 +1,9 @@
 package com.pentagon.golocal.service.implementation;
 
+import com.pentagon.golocal.dto.UpdateCustomerRequest;
 import com.pentagon.golocal.entity.Customer;
 import com.pentagon.golocal.repository.CustomerRepository;
+import com.pentagon.golocal.repository.UserRepository;
 import com.pentagon.golocal.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,7 @@ import java.util.List;
 @Service
 public class CustomerServiceImpl implements CustomerService {
     @Autowired CustomerRepository customerRepository;
+    @Autowired UserRepository userRepository;
 
     @Override
     public Customer createCustomer(Customer customer) {
@@ -40,21 +43,24 @@ public class CustomerServiceImpl implements CustomerService {
         }
 
         customerRepository.deleteById(customerId);
+        userRepository.deleteById(customerId);
         return deletedCustomer;
     }
 
     @Override
-    public Customer updateCustomer(Customer customer) {
-        Customer updatedCustomer = customerRepository.findById(customer.getUsername()).orElse(null);
+    public Customer updateCustomer(UpdateCustomerRequest updateCustomerRequest) {
+        Customer updatedCustomer = customerRepository.findById(updateCustomerRequest.getUsername()).orElse(null);
 
         if (updatedCustomer == null) {
             return null;
         }
 
-        updatedCustomer = customer;
+        updatedCustomer.setCustomerName(updateCustomerRequest.getCustomerName());
+        updatedCustomer.setLocation(updateCustomerRequest.getLocation());
+        updatedCustomer.setMobileNumber(updateCustomerRequest.getMobileNumber());
+        updatedCustomer.setEmail(updateCustomerRequest.getEmail());
+        updatedCustomer.setProfilePicture(updateCustomerRequest.getProfilePicture());
 
-        customerRepository.save(updatedCustomer);
-
-        return updatedCustomer;
+        return customerRepository.save(updatedCustomer);
     }
 }

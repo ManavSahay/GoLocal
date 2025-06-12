@@ -5,14 +5,11 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class UpdateProviderRequest {
+public class UpdateCustomerRequest {
     private String username;
-    private String providerName;
+    private String customerName;
     private String location;
     private Long mobileNumber;
     private String email;
     private byte[] profilePicture;
-    private String service;
-    private int experience;
-    private String description;
 }

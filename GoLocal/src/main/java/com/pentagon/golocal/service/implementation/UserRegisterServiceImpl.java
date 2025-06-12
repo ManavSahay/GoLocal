@@ -33,9 +33,9 @@ public class UserRegisterServiceImpl implements UsersRegisterService {
 		customer.setLocation(registerCustomerRequest.getLocation());
 		customer.setMobileNumber(registerCustomerRequest.getMobileNumber());
 		customer.setEmail(registerCustomerRequest.getEmail());
-		customer.setRating(registerCustomerRequest.getRating());
+		customer.setRating(0);
 		customer.setProfilePicture(registerCustomerRequest.getProfilePicture());
-		customer.setNoOfBookings(registerCustomerRequest.getNoOfBookings());
+		customer.setNoOfBookings(0);
 		
 		return customerService.createCustomer(customer);
 	}
@@ -48,12 +48,12 @@ public class UserRegisterServiceImpl implements UsersRegisterService {
 		provider.setLocation(registerProviderRequest.getLocation());
 		provider.setMobileNumber(registerProviderRequest.getMobileNumber());
 		provider.setEmail(registerProviderRequest.getEmail());
-		provider.setRating(registerProviderRequest.getRating());
+		provider.setRating(0);
 		provider.setProfilePicture(registerProviderRequest.getProfilePicture());
 		provider.setService(registerProviderRequest.getService());
 		provider.setExperience(registerProviderRequest.getExperience());
 		provider.setDescription(registerProviderRequest.getDescription().getBytes(StandardCharsets.UTF_8));
-		provider.setNoOfTimesBooked(registerProviderRequest.getNoOfTimesBooked());
+		provider.setNoOfTimesBooked(0);
 
 		return providerService.createProvider(provider);
 	}
