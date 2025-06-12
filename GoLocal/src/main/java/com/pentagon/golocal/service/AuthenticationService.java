@@ -7,4 +7,5 @@ public interface AuthenticationService {
 	void registerUser(RegisterProviderRequest registerRequest);
 	void registerUser(RegisterAdminRequest registerRequest);
 	TokenPair login(LoginRequest loginRequest);
+	void deleteUser(String userId);
 }

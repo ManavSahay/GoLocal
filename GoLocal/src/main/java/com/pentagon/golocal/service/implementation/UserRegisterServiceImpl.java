@@ -4,6 +4,8 @@ import com.pentagon.golocal.dto.RegisterAdminRequest;
 import com.pentagon.golocal.dto.RegisterRequest;
 import com.pentagon.golocal.entity.Admin;
 import com.pentagon.golocal.repository.AdminRepository;
+import com.pentagon.golocal.service.CustomerService;
+import com.pentagon.golocal.service.ProviderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,11 +17,13 @@ import com.pentagon.golocal.repository.CustomerRepository;
 import com.pentagon.golocal.repository.ProviderRepository;
 import com.pentagon.golocal.service.UsersRegisterService;
 
+import java.nio.charset.StandardCharsets;
+
 @Service
 public class UserRegisterServiceImpl implements UsersRegisterService {
-	@Autowired CustomerRepository customerRepository;
-	@Autowired ProviderRepository providerRepository;
+	@Autowired CustomerService customerService;
 	@Autowired AdminRepository adminRepository;
+	@Autowired ProviderService providerService;
 
 	@Override
 	public Customer registerCustomer(RegisterCustomerRequest registerCustomerRequest) {
@@ -33,14 +37,14 @@ public class UserRegisterServiceImpl implements UsersRegisterService {
 		customer.setProfilePicture(registerCustomerRequest.getProfilePicture());
 		customer.setNoOfBookings(registerCustomerRequest.getNoOfBookings());
 		
-		return customerRepository.save(customer);
+		return customerService.createCustomer(customer);
 	}
 
 	@Override
 	public Provider registerProvider(RegisterProviderRequest registerProviderRequest) {
 		Provider provider = new Provider();
 		provider.setUsername(registerProviderRequest.getUsername());
-		provider.setCustomerName(registerProviderRequest.getProviderName());
+		provider.setProviderName(registerProviderRequest.getProviderName());
 		provider.setLocation(registerProviderRequest.getLocation());
 		provider.setMobileNumber(registerProviderRequest.getMobileNumber());
 		provider.setEmail(registerProviderRequest.getEmail());
@@ -48,10 +52,10 @@ public class UserRegisterServiceImpl implements UsersRegisterService {
 		provider.setProfilePicture(registerProviderRequest.getProfilePicture());
 		provider.setService(registerProviderRequest.getService());
 		provider.setExperience(registerProviderRequest.getExperience());
-		provider.setDescription(registerProviderRequest.getDescription());
+		provider.setDescription(registerProviderRequest.getDescription().getBytes(StandardCharsets.UTF_8));
 		provider.setNoOfTimesBooked(registerProviderRequest.getNoOfTimesBooked());
-		
-		return providerRepository.save(provider);
+
+		return providerService.createProvider(provider);
 	}
 
 	@Override
@@ -63,5 +67,4 @@ public class UserRegisterServiceImpl implements UsersRegisterService {
 
 		return adminRepository.save(admin);
 	}
-
 }

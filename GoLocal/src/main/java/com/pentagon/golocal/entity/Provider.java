@@ -21,7 +21,7 @@ public class Provider {
 	private String username;
 	
 	@Column(name = "provider_name")
-	private String customerName;
+	private String providerName;
 	
 	@Column(name = "location")
 	private String location;

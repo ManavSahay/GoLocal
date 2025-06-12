@@ -79,4 +79,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		}
 		return false;
 	}
+
+	@Override
+	public void deleteUser(String userId) {
+		userRepository.deleteById(userId);
+	}
 }

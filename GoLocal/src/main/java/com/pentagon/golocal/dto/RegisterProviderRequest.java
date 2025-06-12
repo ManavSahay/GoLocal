@@ -14,6 +14,6 @@ public class RegisterProviderRequest extends RegisterRequest {
 	private byte[] profilePicture;
 	private String service;
 	private int experience;
-	private byte[] description;
+	private String description;
 	private int noOfTimesBooked;
 }
