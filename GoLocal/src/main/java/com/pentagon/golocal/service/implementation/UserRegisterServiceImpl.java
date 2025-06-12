@@ -40,7 +40,7 @@ public class UserRegisterServiceImpl implements UsersRegisterService {
 	public Provider registerProvider(RegisterProviderRequest registerProviderRequest) {
 		Provider provider = new Provider();
 		provider.setUsername(registerProviderRequest.getUsername());
-		provider.setCustomerName(registerProviderRequest.getCustomerName());
+		provider.setCustomerName(registerProviderRequest.getProviderName());
 		provider.setLocation(registerProviderRequest.getLocation());
 		provider.setMobileNumber(registerProviderRequest.getMobileNumber());
 		provider.setEmail(registerProviderRequest.getEmail());
