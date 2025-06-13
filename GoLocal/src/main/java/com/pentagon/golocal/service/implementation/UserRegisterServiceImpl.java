@@ -6,6 +6,7 @@ import com.pentagon.golocal.entity.Admin;
 import com.pentagon.golocal.repository.AdminRepository;
 import com.pentagon.golocal.service.CustomerService;
 import com.pentagon.golocal.service.ProviderService;
+import com.pentagon.golocal.service.ServicesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,7 @@ public class UserRegisterServiceImpl implements UsersRegisterService {
 	@Autowired CustomerService customerService;
 	@Autowired AdminRepository adminRepository;
 	@Autowired ProviderService providerService;
+	@Autowired ServicesService servicesService;
 
 	@Override
 	public Customer registerCustomer(RegisterCustomerRequest registerCustomerRequest) {

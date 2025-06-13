@@ -6,9 +6,9 @@ import com.pentagon.golocal.dto.RegisterProviderRequest;
 import com.pentagon.golocal.dto.RegisterServiceRequest;
 import com.pentagon.golocal.dto.UpdateCustomerRequest;
 import com.pentagon.golocal.dto.UpdateProviderRequest;
-import com.pentagon.golocal.entity.Provider;
-import com.pentagon.golocal.entity.ServiceEntity;
+import com.pentagon.golocal.entity.*;
 import com.pentagon.golocal.repository.ProviderRepository;
+import com.pentagon.golocal.service.BookingService;
 import com.pentagon.golocal.service.CustomerService;
 import com.pentagon.golocal.service.ProviderService;
 import com.pentagon.golocal.service.ServicesService;
@@ -18,8 +18,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import com.pentagon.golocal.entity.Customer;
-import com.pentagon.golocal.entity.User;
 import com.pentagon.golocal.repository.CustomerRepository;
 import com.pentagon.golocal.repository.UserRepository;
 
@@ -31,6 +29,7 @@ public class AdminController {
 	@Autowired CustomerService customerService;
 	@Autowired ServicesService servicesService;
 	@Autowired ProviderService providerService;
+	@Autowired BookingService bookingService;
 	
 	@GetMapping("/get-users")
 	public ResponseEntity<?> getAllUsers() {
@@ -160,13 +159,9 @@ public class AdminController {
 		return ResponseEntity.ok(services);
 	}
 
-	@GetMapping("/hello")
-	public ResponseEntity<?> hello() {
-		return ResponseEntity.ok("Hello Admin");
-	}
-	
-	@GetMapping("/hii")
-	public ResponseEntity<?> hii() {
-		return ResponseEntity.ok("Hii everyone");
+	@GetMapping("/get-all-bookings")
+	public ResponseEntity<?> getAllBookings() {
+		List<Booking> bookings = bookingService.getAllBookings();
+		return ResponseEntity.ok(bookings);
 	}
 }

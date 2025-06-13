@@ -40,5 +40,5 @@ public class Booking {
 	private String typeOfJob;
 	
 	@Column(name = "status")
-	private boolean status;
+	private BookingStatus status;
 }

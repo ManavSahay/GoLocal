@@ -63,4 +63,15 @@ public class CustomerServiceImpl implements CustomerService {
 
         return customerRepository.save(updatedCustomer);
     }
+
+    public Customer increateNumberOfBookings(String customerId) {
+        Customer customer = customerRepository.findById(customerId).orElse(null);
+
+        if (customer == null) {
+            return null;
+        }
+
+        customer.setNoOfBookings(customer.getNoOfBookings() + 1);
+        return customerRepository.save(customer);
+    }
 }

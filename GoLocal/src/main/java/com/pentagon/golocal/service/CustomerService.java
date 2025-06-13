@@ -11,4 +11,5 @@ public interface CustomerService {
     List<Customer> getAllCustomers();
     Customer deleteCustomer(String customerId);
     Customer updateCustomer(UpdateCustomerRequest updateCustomerRequest);
+    Customer increateNumberOfBookings(String customerId);
 }

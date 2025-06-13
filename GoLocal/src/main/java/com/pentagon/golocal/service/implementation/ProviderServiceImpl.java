@@ -5,6 +5,7 @@ import com.pentagon.golocal.entity.Provider;
 import com.pentagon.golocal.repository.ProviderRepository;
 import com.pentagon.golocal.repository.UserRepository;
 import com.pentagon.golocal.service.ProviderService;
+import com.pentagon.golocal.service.ServicesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +16,15 @@ import java.util.List;
 public class ProviderServiceImpl implements ProviderService {
     @Autowired ProviderRepository providerRepository;
     @Autowired UserRepository userRepository;
+    @Autowired ServicesService servicesService;
 
     @Override
     public Provider createProvider(Provider provider) {
         if (providerRepository.existsByProviderId(provider.getUsername()) != null) {
             return null;
         }
+
+        servicesService.increaseProviderCount(provider.getService());
         return providerRepository.save(provider);
     }
 
@@ -36,10 +40,13 @@ public class ProviderServiceImpl implements ProviderService {
 
     @Override
     public Provider deleteProvider(String providerId) {
-        if (providerRepository.existsByProviderId(providerId) == null) {
+        Provider deletedProvider = providerRepository.findById(providerId).orElse(null);
+
+        if (deletedProvider == null) {
             return null;
         }
-        Provider deletedProvider = providerRepository.findById(providerId).orElse(null);
+
+        servicesService.decreaseProviderCount(deletedProvider.getService());
         providerRepository.deleteById(providerId);
         userRepository.deleteById(providerId);
         return deletedProvider;
@@ -73,5 +80,17 @@ public class ProviderServiceImpl implements ProviderService {
     @Override
     public List<Provider> getRelevantProvider(String location, String serviceName) {
         return providerRepository.findProviderByTypeAndLocation(serviceName, location);
+    }
+
+    @Override
+    public Provider increaseNoOfTimesBooked(String providerId) {
+        Provider provider = providerRepository.findById(providerId).orElse(null);
+
+        if (provider == null) {
+            return null;
+        }
+
+        provider.setNoOfTimesBooked(provider.getNoOfTimesBooked() + 1);
+        return providerRepository.save(provider);
     }
 }
