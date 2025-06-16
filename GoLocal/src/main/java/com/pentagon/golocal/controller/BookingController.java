@@ -3,9 +3,9 @@ package com.pentagon.golocal.controller;
 import com.pentagon.golocal.dto.BookProvider;
 import com.pentagon.golocal.entity.Booking;
 import com.pentagon.golocal.service.BookingService;
+import com.pentagon.golocal.service.RatingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -18,6 +18,7 @@ import java.util.List;
 @RequestMapping("/api/bookings/")
 public class BookingController {
     @Autowired BookingService bookingService;
+//    @Autowired RatingService ratingService;
 
     @PostMapping("/book-request")
     @PreAuthorize("hasRole('CUSTOMER')")
