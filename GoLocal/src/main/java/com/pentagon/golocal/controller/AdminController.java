@@ -2,20 +2,15 @@ package com.pentagon.golocal.controller;
 
 import java.util.List;
 
-import com.pentagon.golocal.dto.RegisterProviderRequest;
-import com.pentagon.golocal.dto.RegisterServiceRequest;
-import com.pentagon.golocal.dto.UpdateCustomerRequest;
-import com.pentagon.golocal.dto.UpdateProviderRequest;
+import com.pentagon.golocal.dto.*;
 import com.pentagon.golocal.entity.*;
 import com.pentagon.golocal.repository.ProviderRepository;
-import com.pentagon.golocal.service.BookingService;
-import com.pentagon.golocal.service.CustomerService;
-import com.pentagon.golocal.service.ProviderService;
-import com.pentagon.golocal.service.ServicesService;
+import com.pentagon.golocal.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import com.pentagon.golocal.repository.CustomerRepository;
@@ -25,11 +20,13 @@ import com.pentagon.golocal.repository.UserRepository;
 @RequestMapping("/api/admin")
 @PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
-	@Autowired UserRepository userRepository;
-	@Autowired CustomerService customerService;
-	@Autowired ServicesService servicesService;
-	@Autowired ProviderService providerService;
-	@Autowired BookingService bookingService;
+	@Autowired private AuthenticationService authenticationService;
+	@Autowired private UserRepository userRepository;
+	@Autowired private CustomerService customerService;
+	@Autowired private ServicesService servicesService;
+	@Autowired private ProviderService providerService;
+	@Autowired private BookingService bookingService;
+	@Autowired private PasswordEncoder passwordEncoder;
 	
 	@GetMapping("/get-users")
 	public ResponseEntity<?> getAllUsers() {
@@ -52,6 +49,12 @@ public class AdminController {
 		}
 
 		return ResponseEntity.ok(customer);
+	}
+
+	@PostMapping("/create-customer")
+	public ResponseEntity<?> createCustomer(@RequestBody RegisterCustomerRequest registerRequest) {
+		authenticationService.registerUser(registerRequest);
+		return ResponseEntity.ok("Customer created!");
 	}
 
 	@PutMapping("/update-customer/{customerId}")
@@ -91,6 +94,12 @@ public class AdminController {
 		}
 
 		return ResponseEntity.ok(provider);
+	}
+
+	@PostMapping("/create-provider")
+	public ResponseEntity<?> registerProvider(@RequestBody RegisterProviderRequest registerRequest) {
+		authenticationService.registerUser(registerRequest);
+		return ResponseEntity.ok(registerRequest);
 	}
 
 	@PutMapping("/update-provider/{providerId}")
@@ -163,5 +172,19 @@ public class AdminController {
 	public ResponseEntity<?> getAllBookings() {
 		List<Booking> bookings = bookingService.getAllBookings();
 		return ResponseEntity.ok(bookings);
+	}
+
+	@PutMapping("/update-password/{username}/{newPassword}")
+	public ResponseEntity<?> updatePassword(@PathVariable String username,
+											@PathVariable String newPassword) {
+		User user = userRepository.findByUsername(username).orElseThrow(
+				() -> new IllegalArgumentException("User does not exist!")
+		);
+
+		user.setPassword(passwordEncoder.encode(newPassword));
+
+		userRepository.save(user);
+
+		return ResponseEntity.ok("Password changed");
 	}
 }

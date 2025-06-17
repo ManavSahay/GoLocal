@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.awt.print.Book;
 import java.text.SimpleDateFormat;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
-    public String bookService(String username, String typeOfJob, BookProvider bookProvider) {
+    public Booking bookService(String username, String typeOfJob, BookProvider bookProvider) {
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         Booking booking = new Booking();
         String bookingId = username + bookProvider.getProviderId() + format.format(bookProvider.getDateTime());
@@ -44,9 +45,7 @@ public class BookingServiceImpl implements BookingService {
         booking.setTypeOfJob(typeOfJob);
         booking.setStatus(BookingStatus.REQUESTED);
 
-        bookingRepository.save(booking);
-
-        return bookingId;
+        return bookingRepository.save(booking);
     }
 
     @Override

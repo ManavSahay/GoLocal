@@ -23,8 +23,8 @@ public class BookingController {
     @PostMapping("/book-request/{typeOfJob}/{customerId}")
     @PreAuthorize("hasRole('CUSTOMER')")
     public ResponseEntity<?> bookProvider(@PathVariable String customerId, @PathVariable String typeOfJob, @RequestBody BookProvider bookProvider) {
-        String bookingId = bookingService.bookService(customerId, typeOfJob, bookProvider);
-        return ResponseEntity.ok(bookingId);
+        Booking booking = bookingService.bookService(customerId, typeOfJob, bookProvider);
+        return ResponseEntity.ok(booking);
     }
 
     @GetMapping("/get-booked-requests/{customerId}")

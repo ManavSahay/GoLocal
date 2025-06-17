@@ -9,7 +9,7 @@ public interface BookingService {
     List<Booking> getAllBookings();
     List<Booking> getBookedRequests(String username);
     List<Booking> getBookingRequests(String username);
-    String bookService(String username, String typeOfJob, BookProvider bookProvider);
+    Booking bookService(String username, String typeOfJob, BookProvider bookProvider);
     Booking revokeBooking(String bookingId);
     Booking acceptBooking(String bookingId);
     Booking rejectBooking(String bookingId);
