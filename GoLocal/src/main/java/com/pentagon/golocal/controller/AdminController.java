@@ -138,12 +138,6 @@ public class AdminController {
 		return ResponseEntity.ok(providers);
 	}
 
-	@PostMapping("/create-customer")
-	public ResponseEntity<?> createCustomer(@RequestBody Customer customer) {
-		
-		return ResponseEntity.ok(customer);
-	}
-
 	@PostMapping("/create-service")
 	public ResponseEntity<?> createService(@RequestBody RegisterServiceRequest registerServiceRequest) {
 		ServiceEntity service = servicesService.createService(registerServiceRequest);
