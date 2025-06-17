@@ -6,6 +6,8 @@ import java.util.Map;
 
 import javax.crypto.SecretKey;
 
+import com.pentagon.golocal.repository.TokenRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,9 +31,12 @@ public class JwtServiceImpl implements JwtService {
 	
 	@Value("${app.jwt.refresh-expiration}")
 	private long refreshExpirationMs;
+
+	@Autowired private TokenRepository tokenRepository;
 	
 	public String generateAccessToken(Authentication authentication) {
-		return generateToken(authentication, jwtExpirationMs, new HashMap<>());
+
+        return generateToken(authentication, jwtExpirationMs, new HashMap<>());
 	}
 	
 	public String generateRefreshToken(Authentication authentication) {
@@ -47,13 +52,17 @@ public class JwtServiceImpl implements JwtService {
 		if (!username.equals(userDetails.getUsername())) {
 			return false;
 		}
+
+		boolean isValidToken = tokenRepository.findByToken(token)
+				.map(t -> !t.isLoggedOut())
+				.orElse(false);
 		
 		try {
 			Jwts.parser()
 				.verifyWith(getSignInKey())
 				.build()
 				.parseSignedClaims(token);
-			return true;
+			return isValidToken;
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 			return false;

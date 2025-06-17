@@ -5,6 +5,7 @@ import jakarta.servlet.http.Cookie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import com.pentagon.golocal.dto.*;
@@ -46,8 +47,12 @@ public class AuthenticationController {
 			return new ResponseEntity<>("Invalid credentials", HttpStatus.BAD_REQUEST);
 		}
 
-		Cookie cookie = new Cookie("username", loginRequest.getUsername());
-		
 		return ResponseEntity.ok(tokenPair);
+	}
+
+	@GetMapping("/me")
+	public ResponseEntity<?> getMyUsername() {
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		return ResponseEntity.ok(username);
 	}
 }

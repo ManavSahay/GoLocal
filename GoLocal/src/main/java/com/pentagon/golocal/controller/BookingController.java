@@ -20,17 +20,17 @@ public class BookingController {
     @Autowired BookingService bookingService;
 //    @Autowired RatingService ratingService;
 
-    @PostMapping("/book-request")
+    @PostMapping("/book-request/{typeOfJob}/{customerId}")
     @PreAuthorize("hasRole('CUSTOMER')")
-    public ResponseEntity<?> bookProvider(@RequestParam String typeOfJob, @RequestBody BookProvider bookProvider) {
-        String bookingId = bookingService.bookService(getUsername(), typeOfJob, bookProvider);
+    public ResponseEntity<?> bookProvider(@PathVariable String customerId, @PathVariable String typeOfJob, @RequestBody BookProvider bookProvider) {
+        String bookingId = bookingService.bookService(customerId, typeOfJob, bookProvider);
         return ResponseEntity.ok(bookingId);
     }
 
-    @GetMapping("/get-booked-requests")
+    @GetMapping("/get-booked-requests/{customerId}")
     @PreAuthorize("hasRole('CUSTOMER')")
-    public ResponseEntity<?> getAllBookedServices() {
-        List<Booking> bookings = bookingService.getBookedRequests(getUsername());
+    public ResponseEntity<?> getAllBookedServices(@PathVariable String customerId) {
+        List<Booking> bookings = bookingService.getBookedRequests(customerId);
         return ResponseEntity.ok(bookings);
     }
 
@@ -55,10 +55,10 @@ public class BookingController {
         return ResponseEntity.ok(rejectedBooking);
     }
 
-    @GetMapping("/all-received-requests")
+    @GetMapping("/all-received-requests/{providerId}")
     @PreAuthorize("hasRole('PROVIDER')")
-    public ResponseEntity<?> getAllRequests() {
-        List<Booking> bookings = bookingService.getBookingRequests(getUsername());
+    public ResponseEntity<?> getAllRequests(@PathVariable String providerId) {
+        List<Booking> bookings = bookingService.getBookingRequests(providerId);
         return ResponseEntity.ok(bookings);
     }
 
@@ -72,10 +72,6 @@ public class BookingController {
         }
 
         return ResponseEntity.ok(completedBooking);
-    }
-
-    private String getUsername() {
-        return SecurityContextHolder.getContext().getAuthentication().getName();
     }
 
 }

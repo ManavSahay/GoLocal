@@ -1,6 +1,8 @@
 package com.pentagon.golocal.service.implementation;
 
 import com.pentagon.golocal.dto.*;
+import com.pentagon.golocal.entity.Token;
+import com.pentagon.golocal.repository.TokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -17,6 +19,8 @@ import com.pentagon.golocal.service.UsersRegisterService;
 
 import jakarta.transaction.Transactional;
 
+import java.util.List;
+
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
 
@@ -25,6 +29,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	@Autowired private AuthenticationManager authenticationManager;
 	@Autowired private JwtService jwtService;
 	@Autowired private UsersRegisterService usersRegisterService;
+	@Autowired private TokenRepository tokenRepository;
 
 	@Transactional
 	public void registerUser(RegisterCustomerRequest registerRequest) {
@@ -70,18 +75,49 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
-		return jwtService.generateTokenPair(authentication);
-	}
-	
-	private boolean ifUserExists(String username) {
-		if (userRepository.existsByUsername(username)) {
-			return true;
+		TokenPair tokenPair = jwtService.generateTokenPair(authentication);
+
+		User user = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName())
+				.orElse(null);
+
+		if (user == null) {
+			return null;
 		}
-		return false;
+
+		revokeAllTokensFromUser(user);
+
+		saveUserToken(tokenPair, user);
+
+		return tokenPair;
 	}
+
+	private boolean ifUserExists(String username) {
+		return userRepository.existsByUsername(username);
+    }
 
 	@Override
 	public void deleteUser(String userId) {
 		userRepository.deleteById(userId);
+	}
+
+	private void saveUserToken(TokenPair tokenPair, User user) {
+		Token token = new Token();
+		token.setToken(tokenPair.getAccessToken());
+		token.setLoggedOut(false);
+		token.setUser(user);
+
+		tokenRepository.save(token);
+	}
+
+	private void revokeAllTokensFromUser(User user) {
+		List<Token> validTokenListByUser = tokenRepository.findAllTokenByUser(user.getUsername());
+
+		if (!validTokenListByUser.isEmpty()) {
+			validTokenListByUser.forEach( t ->
+					t.setLoggedOut(true)
+			);
+		}
+
+		tokenRepository.saveAll(validTokenListByUser);
 	}
 }

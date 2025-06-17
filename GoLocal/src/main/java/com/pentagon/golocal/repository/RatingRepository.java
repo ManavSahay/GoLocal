@@ -6,13 +6,18 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface RatingRepository extends JpaRepository<Rating, String> {
+    @Query(value = "select * from " +
+            "ratings " +
+            "where booking_id = ?1", nativeQuery = true)
+    Optional<Rating> findByBooking(String bookingId);
 
     @Query(value = "select rating_by_customer " +
             "from ratings r inner join bookings b " +
             "on r.booking_id = b.booking_id " +
-            "where b.provider_id = ?1 ", nativeQuery = true)
+            "where b.provider_id = ?1", nativeQuery = true)
     List<Integer> getRatingsByCustomerId(String providerId);
 
     @Query(value = "select rating_by_provider " +

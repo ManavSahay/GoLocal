@@ -17,7 +17,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer createCustomer(Customer customer) {
-        if (customerRepository.findById(customer.getUsername()).orElse(null) != null) {
+        Customer isExistingCustomer = customerRepository.findById(customer.getUsername()).orElse(null);
+
+        if (isExistingCustomer != null) {
             return null;
         }
 
@@ -26,7 +28,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer getCustomer(String customerId) {
-        return customerRepository.findById(customerId).orElse(null);
+        return customerRepository.findById(customerId).orElseThrow(
+                () -> new IllegalArgumentException("Customer does not exist!")
+        );
     }
 
     @Override
@@ -36,7 +40,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer deleteCustomer(String customerId) {
-        Customer deletedCustomer = customerRepository.findById(customerId).orElse(null);
+        Customer deletedCustomer = customerRepository.findById(customerId).orElseThrow(
+                () -> new IllegalArgumentException("Customer does not exist!")
+        );
 
         if (deletedCustomer == null) {
             return null;
@@ -49,7 +55,9 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer updateCustomer(UpdateCustomerRequest updateCustomerRequest) {
-        Customer updatedCustomer = customerRepository.findById(updateCustomerRequest.getUsername()).orElse(null);
+        Customer updatedCustomer = customerRepository.findById(updateCustomerRequest.getUsername()).orElseThrow(
+                () -> new IllegalArgumentException("Customer does not exist!")
+        );
 
         if (updatedCustomer == null) {
             return null;
