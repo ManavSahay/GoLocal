@@ -1,11 +1,10 @@
 package com.pentagon.golocal.entity;
 
 import java.util.Date;
+import java.util.List;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.pentagon.golocal.entity.Provider;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,11 +20,13 @@ public class Booking {
 	@Column(name = "booking_id")
 	private String bookingId;
 	
-	@Column(name = "provider_id")
-	private String providerId;
+	@JoinColumn(name = "provider_id")
+	@ManyToOne
+	private Provider provider;
 	
-	@Column(name = "customer_id")
-	private String customerId;
+	@JoinColumn(name = "customer_id")
+	@ManyToOne
+	private Customer customer;
 	
 	@Column(name = "location")
 	private String location;

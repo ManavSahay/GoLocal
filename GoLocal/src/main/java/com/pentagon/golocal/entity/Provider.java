@@ -1,10 +1,9 @@
 package com.pentagon.golocal.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,8 +38,10 @@ public class Provider {
 	@Column(name = "profile_picture", columnDefinition = "BLOB")
 	private byte[] profilePicture;
 	
-	@Column(name = "service")
-	private String service;
+	@JoinColumn(name = "service")
+	@ManyToOne
+	@JsonProperty("service")
+	private ServiceEntity service;
 	
 	@Column(name = "experience")
 	private int experience;
@@ -51,4 +52,9 @@ public class Provider {
 	
 	@Column(name = "no_of_times_booked")
 	private int noOfTimesBooked;
+
+//	@OneToMany
+//	@JoinColumn(name = "booked_by")
+//	@JsonIgnore
+//	private List<Booking> bookings;
 }

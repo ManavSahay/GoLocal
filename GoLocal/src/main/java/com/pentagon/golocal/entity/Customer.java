@@ -1,13 +1,12 @@
 package com.pentagon.golocal.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Lob;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -41,5 +40,10 @@ public class Customer {
 
 	@Column(name = "no_of_bookings")
 	private int noOfBookings;
+
+//	@OneToMany
+//	@JoinColumn(name = "bookings")
+//	@JsonIgnore
+//	private List<Booking> bookings;
 
 }

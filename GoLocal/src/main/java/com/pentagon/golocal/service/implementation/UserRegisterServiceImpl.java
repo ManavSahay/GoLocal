@@ -4,6 +4,7 @@ import com.pentagon.golocal.dto.RegisterAdminRequest;
 import com.pentagon.golocal.dto.RegisterRequest;
 import com.pentagon.golocal.entity.Admin;
 import com.pentagon.golocal.repository.AdminRepository;
+import com.pentagon.golocal.repository.ServicesRepository;
 import com.pentagon.golocal.service.CustomerService;
 import com.pentagon.golocal.service.ProviderService;
 import com.pentagon.golocal.service.ServicesService;
@@ -26,6 +27,7 @@ public class UserRegisterServiceImpl implements UsersRegisterService {
 	@Autowired AdminRepository adminRepository;
 	@Autowired ProviderService providerService;
 	@Autowired ServicesService servicesService;
+	@Autowired ServicesRepository servicesRepository;
 
 	@Override
 	public Customer registerCustomer(RegisterCustomerRequest registerCustomerRequest) {

@@ -37,26 +37,26 @@ public class ServicesServiceImpl implements ServicesService {
     }
 
     @Override
-    public ServiceEntity increaseProviderCount(String serviceId) {
-        ServiceEntity service = servicesRepository.findById(serviceId).orElse(null);
+    public ServiceEntity increaseProviderCount(ServiceEntity service) {
+//        ServiceEntity service = servicesRepository.findById(serviceId).orElse(null);
+//
+//        if (service == null) {
+//            return null;
+//        }
 
-        if (service == null) {
-            return null;
-        }
-
-        service.setNoOfProviders(service.getNoOfProviders() + 1);
+        service.setNoOfProviders(servicesRepository.getNoOfProviders(service.getServiceId()) + 1);
         return servicesRepository.save(service);
     }
 
     @Override
-    public ServiceEntity decreaseProviderCount(String serviceId) {
-        ServiceEntity service = servicesRepository.findById(serviceId).orElse(null);
+    public ServiceEntity decreaseProviderCount(ServiceEntity service) {
+//        ServiceEntity service = servicesRepository.findById(serviceId).orElse(null);
+//
+//        if (service == null) {
+//            return null;
+//        }
 
-        if (service == null) {
-            return null;
-        }
-
-        service.setNoOfProviders(service.getNoOfProviders() - 1);
+        service.setNoOfProviders(servicesRepository.getNoOfProviders(service.getServiceId()) + 1);
         return servicesRepository.save(service);
     }
 }

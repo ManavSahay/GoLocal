@@ -1,5 +1,6 @@
 package com.pentagon.golocal.dto;
 
+import com.pentagon.golocal.entity.ServiceEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -11,7 +12,7 @@ public class RegisterProviderRequest extends RegisterRequest {
 	private Long mobileNumber;
 	private String email;
 	private byte[] profilePicture;
-	private String service;
+	private ServiceEntity service;
 	private int experience;
 	private String description;
 }

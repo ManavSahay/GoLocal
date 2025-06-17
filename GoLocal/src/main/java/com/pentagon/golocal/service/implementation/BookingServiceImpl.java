@@ -36,8 +36,8 @@ public class BookingServiceImpl implements BookingService {
         Booking booking = new Booking();
         String bookingId = username + bookProvider.getProviderId() + format.format(bookProvider.getDateTime());
         booking.setBookingId(bookingId);
-        booking.setCustomerId(username);
-        booking.setProviderId(bookProvider.getProviderId());
+        booking.setCustomer(customerService.getCustomer(username));
+        booking.setProvider(providerService.getProvider(bookProvider.getProviderId()));
         booking.setLocation(bookProvider.getLocation());
         booking.setDateTime(bookProvider.getDateTime());
         booking.setAmountPaid(bookProvider.getAmount());
@@ -97,8 +97,8 @@ public class BookingServiceImpl implements BookingService {
         }
 
         booking.setStatus(BookingStatus.COMPLETED);
-        providerService.increaseNoOfTimesBooked(booking.getProviderId());
-        customerService.increateNumberOfBookings(booking.getCustomerId());
+        providerService.increaseNoOfTimesBooked(booking.getProvider().getUsername());
+        customerService.increateNumberOfBookings(booking.getCustomer().getUsername());
 
         return bookingRepository.save(booking);
     }

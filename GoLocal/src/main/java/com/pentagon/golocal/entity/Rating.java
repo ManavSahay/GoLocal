@@ -1,9 +1,7 @@
 package com.pentagon.golocal.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,8 +17,10 @@ public class Rating {
 	@Column(name = "rating_id")
 	private String ratingId;
 	
-	@Column(name = "booking_id")
-	private String bookingId;
+	@JoinColumn(name = "booking")
+	@OneToOne
+	@JsonProperty("booking")
+	private Booking booking;
 	
 	@Column(name = "rating_by_customer")
 	private int ratingByCustomer;

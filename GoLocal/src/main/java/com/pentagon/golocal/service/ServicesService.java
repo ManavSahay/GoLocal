@@ -9,6 +9,6 @@ public interface ServicesService {
     ServiceEntity getServiceById(String serviceId);
     List<ServiceEntity> getAllServices();
     ServiceEntity createService(RegisterServiceRequest registerServiceRequest);
-    ServiceEntity increaseProviderCount(String serviceId);
-    ServiceEntity decreaseProviderCount(String serviceId);
+    ServiceEntity increaseProviderCount(ServiceEntity service);
+    ServiceEntity decreaseProviderCount(ServiceEntity service);
 }
