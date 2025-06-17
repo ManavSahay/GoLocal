@@ -10,6 +10,6 @@ public interface CustomerService {
     Customer getCustomer(String customerId);
     List<Customer> getAllCustomers();
     Customer deleteCustomer(String customerId);
-    Customer updateCustomer(UpdateCustomerRequest updateCustomerRequest);
+    Customer updateCustomer(String customerId, UpdateCustomerRequest updateCustomerRequest);
     Customer increateNumberOfBookings(String customerId);
 }

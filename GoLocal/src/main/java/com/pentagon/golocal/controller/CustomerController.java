@@ -3,9 +3,11 @@ package com.pentagon.golocal.controller;
 import com.pentagon.golocal.dto.UpdateCustomerRequest;
 import com.pentagon.golocal.entity.Booking;
 import com.pentagon.golocal.entity.Customer;
+import com.pentagon.golocal.entity.Provider;
 import com.pentagon.golocal.entity.Rating;
 import com.pentagon.golocal.service.BookingService;
 import com.pentagon.golocal.service.CustomerService;
+import com.pentagon.golocal.service.ProviderService;
 import com.pentagon.golocal.service.RatingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,11 +22,12 @@ import java.util.List;
 public class CustomerController {
     @Autowired private CustomerService customerService;
     @Autowired private RatingService ratingService;
+    @Autowired private ProviderService providerService;
 
-    @PostMapping("/update-customer/{customerId}")
+    @PutMapping("/update-customer/{customerId}")
     public ResponseEntity<?> updateCustomer(@PathVariable String customerId,
                                             @RequestBody UpdateCustomerRequest updateCustomerRequest) {
-        Customer customer = customerService.updateCustomer(updateCustomerRequest);
+        Customer customer = customerService.updateCustomer(customerId, updateCustomerRequest);
         return ResponseEntity.ok(customer);
     }
 
@@ -33,7 +36,7 @@ public class CustomerController {
                                           @PathVariable String bookingId,
                                           @PathVariable int ratingValue) {
 
-        Rating rating = ratingService.rateCustomer(customerId, bookingId, ratingValue);
+        Rating rating = ratingService.rateProvider(customerId, bookingId, ratingValue);
         return ResponseEntity.ok(rating);
     }
 

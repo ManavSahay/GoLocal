@@ -54,9 +54,9 @@ public class AdminController {
 		return ResponseEntity.ok(customer);
 	}
 
-	@PutMapping("/update-customer")
-	public ResponseEntity<?> updateCustomer(@RequestBody UpdateCustomerRequest updateCustomerRequest) {
-		Customer updatedCustomer = customerService.updateCustomer(updateCustomerRequest);
+	@PutMapping("/update-customer/{customerId}")
+	public ResponseEntity<?> updateCustomer(@PathVariable String customerId, @RequestBody UpdateCustomerRequest updateCustomerRequest) {
+		Customer updatedCustomer = customerService.updateCustomer(customerId, updateCustomerRequest);
 
 		if (updatedCustomer == null) {
 			return new ResponseEntity<>("Customer does not exists!", HttpStatus.BAD_REQUEST);
@@ -93,9 +93,9 @@ public class AdminController {
 		return ResponseEntity.ok(provider);
 	}
 
-	@PutMapping("/update-provider")
-	public ResponseEntity<?> updateProvider(@RequestBody UpdateProviderRequest updateProviderRequest) {
-		Provider updatedProvider = providerService.updateProvider(updateProviderRequest);
+	@PutMapping("/update-provider/{providerId}")
+	public ResponseEntity<?> updateProvider(@PathVariable String providerId, @RequestBody UpdateProviderRequest updateProviderRequest) {
+		Provider updatedProvider = providerService.updateProvider(providerId, updateProviderRequest);
 
 		return ResponseEntity.ok(updatedProvider);
 	}

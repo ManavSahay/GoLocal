@@ -53,8 +53,8 @@ public class ProviderServiceImpl implements ProviderService {
     }
 
     @Override
-    public Provider updateProvider(UpdateProviderRequest provider) {
-        Provider findProvider = providerRepository.findById(provider.getUsername()).orElse(null);
+    public Provider updateProvider(String providerId, UpdateProviderRequest provider) {
+        Provider findProvider = providerRepository.findById(providerId).orElse(null);
 
         if (findProvider == null) {
             return null;

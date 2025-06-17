@@ -54,8 +54,8 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer updateCustomer(UpdateCustomerRequest updateCustomerRequest) {
-        Customer updatedCustomer = customerRepository.findById(updateCustomerRequest.getUsername()).orElseThrow(
+    public Customer updateCustomer(String customerId, UpdateCustomerRequest updateCustomerRequest) {
+        Customer updatedCustomer = customerRepository.findById(customerId).orElseThrow(
                 () -> new IllegalArgumentException("Customer does not exist!")
         );
 

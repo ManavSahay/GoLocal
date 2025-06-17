@@ -10,7 +10,7 @@ public interface ProviderService {
     Provider getProvider(String providerId);
     List<Provider> getAllProvider();
     Provider deleteProvider(String providerId);
-    Provider updateProvider(UpdateProviderRequest updateProviderRequest);
+    Provider updateProvider(String providerId, UpdateProviderRequest updateProviderRequest);
     List<Provider> getNearbyProviders(String location);
     List<Provider> getRelevantProvider(String location, String serviceId);
     Provider increaseNoOfTimesBooked(String providerId);
