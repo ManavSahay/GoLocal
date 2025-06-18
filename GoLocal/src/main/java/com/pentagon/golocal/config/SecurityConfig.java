@@ -25,6 +25,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import com.pentagon.golocal.filter.JwtAuthenticationFilter;
 import org.springframework.security.web.authentication.logout.LogoutHandler;
+import org.springframework.web.cors.CorsConfiguration;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -36,7 +40,16 @@ public class SecurityConfig {
 
 	@Bean
 	SecurityFilterChain defaultFilterChain(HttpSecurity http) throws Exception {
-		http.csrf(AbstractHttpConfigurer::disable)
+		http
+				.cors(cors -> cors.configurationSource(request -> {
+					CorsConfiguration configuration = new CorsConfiguration();
+					configuration.setAllowedOrigins(List.of("*"));
+					configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
+					configuration.setAllowedHeaders(List.of("*"));
+					configuration.setAllowCredentials(true);
+					return configuration;
+				}))
+				.csrf(AbstractHttpConfigurer::disable)
 				.authorizeHttpRequests(
 						request -> request.requestMatchers("/api/auth/**").permitAll()
 				.anyRequest().authenticated())
