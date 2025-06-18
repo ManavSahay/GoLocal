@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin("http://localhost:5173")
 @RequestMapping("/api/customer")
 @PreAuthorize("hasRole('CUSTOMER')")
 public class CustomerController {

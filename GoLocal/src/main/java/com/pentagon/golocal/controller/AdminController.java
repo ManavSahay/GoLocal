@@ -17,6 +17,7 @@ import com.pentagon.golocal.repository.CustomerRepository;
 import com.pentagon.golocal.repository.UserRepository;
 
 @RestController
+@CrossOrigin("http://localhost:5173")
 @RequestMapping("/api/admin")
 @PreAuthorize("hasRole('ADMIN')")
 public class AdminController {
