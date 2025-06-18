@@ -13,6 +13,7 @@ import com.pentagon.golocal.service.AuthenticationService;
 import com.pentagon.golocal.service.UsersRegisterService;
 
 @RestController
+@CrossOrigin("http://localhost:5173")
 @RequestMapping("/api/auth")
 public class AuthenticationController {
 	@Autowired AuthenticationService authenticationService;

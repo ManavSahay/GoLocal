@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
+@CrossOrigin("http://localhost:5173")
 @RequestMapping("/api/bookings/")
 public class BookingController {
     @Autowired BookingService bookingService;
