@@ -6,6 +6,7 @@ import java.util.Map;
 
 import javax.crypto.SecretKey;
 
+import com.pentagon.golocal.entity.Role;
 import com.pentagon.golocal.repository.TokenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -109,9 +110,9 @@ public class JwtServiceImpl implements JwtService {
 		return Keys.hmacShaKeyFor(keyBytes);
 	}
 	
-	public TokenPair generateTokenPair(Authentication authentication) {
+	public TokenPair generateTokenPair(Authentication authentication, Role role) {
 		String accessToken = generateAccessToken(authentication);
 		String refreshToken = generateRefreshToken(authentication);
-		return new TokenPair(accessToken, refreshToken);
+		return new TokenPair(accessToken, refreshToken, role);
 	}
 }

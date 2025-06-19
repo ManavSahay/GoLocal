@@ -1,5 +1,6 @@
 package com.pentagon.golocal.service;
 
+import com.pentagon.golocal.entity.Role;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -11,5 +12,5 @@ public interface JwtService {
 	boolean isValidToken(String token, UserDetails userDetails);
 	boolean isRefreshToken(String token);
 	String extractUsernameFromToken(String token);
-	TokenPair generateTokenPair(Authentication authentication);
+	TokenPair generateTokenPair(Authentication authentication, Role role);
 }
