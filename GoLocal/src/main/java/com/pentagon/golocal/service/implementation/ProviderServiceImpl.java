@@ -2,6 +2,7 @@ package com.pentagon.golocal.service.implementation;
 
 import com.pentagon.golocal.dto.UpdateProviderRequest;
 import com.pentagon.golocal.entity.Provider;
+import com.pentagon.golocal.entity.Rating;
 import com.pentagon.golocal.repository.ProviderRepository;
 import com.pentagon.golocal.repository.UserRepository;
 import com.pentagon.golocal.service.ProviderService;
@@ -92,5 +93,16 @@ public class ProviderServiceImpl implements ProviderService {
 
         provider.setNoOfTimesBooked(provider.getNoOfTimesBooked() + 1);
         return providerRepository.save(provider);
+    }
+
+    @Override
+    public void updateRating(String providerId, int rating) {
+        Provider provider = providerRepository.findById(providerId).orElseThrow(
+                () -> new IllegalArgumentException("Provider not found!")
+        );
+
+        provider.setRating(rating);
+
+        providerRepository.save(provider);
     }
 }

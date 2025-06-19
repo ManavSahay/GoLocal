@@ -14,4 +14,5 @@ public interface ProviderService {
     List<Provider> getNearbyProviders(String location);
     List<Provider> getRelevantProvider(String location, String serviceId);
     Provider increaseNoOfTimesBooked(String providerId);
+    void updateRating(String providerId, int rating);
 }

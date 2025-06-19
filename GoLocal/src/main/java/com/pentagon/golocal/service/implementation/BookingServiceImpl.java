@@ -7,6 +7,7 @@ import com.pentagon.golocal.repository.BookingRepository;
 import com.pentagon.golocal.service.BookingService;
 import com.pentagon.golocal.service.CustomerService;
 import com.pentagon.golocal.service.ProviderService;
+import com.pentagon.golocal.service.RatingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -17,9 +18,10 @@ import java.util.List;
 
 @Service
 public class BookingServiceImpl implements BookingService {
-    @Autowired BookingRepository bookingRepository;
-    @Autowired ProviderService providerService;
-    @Autowired CustomerService customerService;
+    @Autowired private BookingRepository bookingRepository;
+    @Autowired private ProviderService providerService;
+    @Autowired private CustomerService customerService;
+    @Autowired private RatingService ratingService;
 
     @Override
     public List<Booking> getBookedRequests(String username) {
@@ -70,6 +72,7 @@ public class BookingServiceImpl implements BookingService {
         }
 
         booking.setStatus(BookingStatus.BOOKED);
+        ratingService.createRating("RAT_" + bookingId, bookingId);
 
         return bookingRepository.save(booking);
     }

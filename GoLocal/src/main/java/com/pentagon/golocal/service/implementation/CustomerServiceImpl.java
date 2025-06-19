@@ -72,6 +72,7 @@ public class CustomerServiceImpl implements CustomerService {
         return customerRepository.save(updatedCustomer);
     }
 
+    @Override
     public Customer increateNumberOfBookings(String customerId) {
         Customer customer = customerRepository.findById(customerId).orElse(null);
 
@@ -81,5 +82,16 @@ public class CustomerServiceImpl implements CustomerService {
 
         customer.setNoOfBookings(customer.getNoOfBookings() + 1);
         return customerRepository.save(customer);
+    }
+
+    @Override
+    public void updateRating(String customerId, int rating) {
+        Customer customer = customerRepository.findById(customerId).orElseThrow(
+                () -> new IllegalArgumentException("Customer not found!")
+        );
+
+        customer.setRating(rating);
+
+        customerRepository.save(customer);
     }
 }

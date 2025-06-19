@@ -11,24 +11,24 @@ import java.util.Optional;
 public interface RatingRepository extends JpaRepository<Rating, String> {
     @Query(value = "select * from " +
             "ratings " +
-            "where booking_id = ?1", nativeQuery = true)
+            "where booking = ?1", nativeQuery = true)
     Optional<Rating> findByBooking(String bookingId);
-
-    @Query(value = "select rating_by_customer " +
-            "from ratings r inner join bookings b " +
-            "on r.booking_id = b.booking_id " +
-            "where b.provider_id = ?1", nativeQuery = true)
-    List<Integer> getRatingsByCustomerId(String providerId);
 
     @Query(value = "select rating_by_provider " +
             "from ratings r inner join bookings b " +
-            "on r.booking_id = b.booking_id " +
+            "on r.booking = b.booking_id " +
             "where b.customer_id = ?1", nativeQuery = true)
-    List<Integer> getRatingsByProviderId(String customerId);
+    List<Integer> getRatingsByCustomerId(String customerId);
+
+    @Query(value = "select rating_by_customer " +
+            "from ratings r inner join bookings b " +
+            "on r.booking = b.booking_id " +
+            "where b.provider_id = ?1", nativeQuery = true)
+    List<Integer> getRatingsByProviderId(String providerId);
 
     @Query(value = "select booking_id, rating_by_customer, rating_by_provider " +
             "from ratings r inner join bookings b " +
             "on r.booking_id = b.booking_id " +
-            "where booking_id = ?1", nativeQuery = true)
+            "where booking = ?1", nativeQuery = true)
     CreateRating isBothRatingsProvided(String bookingId);
 }
