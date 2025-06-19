@@ -75,17 +75,17 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 				new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
 		SecurityContextHolder.getContext().setAuthentication(authentication);
-		User user = userRepository.findByUsername(SecurityContextHolder.getContext().getAuthentication().getName())
+
+		User user = userRepository.findByUsername(authentication.getName())
 				.orElseThrow(
 						() -> new IllegalArgumentException("User not found!")
 				);
 
-//		if (user == null) {
-//			return null;
-//		}
+		if (user == null) {
+			return null;
+		}
 
 		TokenPair tokenPair = jwtService.generateTokenPair(authentication, user.getRole());
-
 
 		revokeAllTokensFromUser(user);
 
