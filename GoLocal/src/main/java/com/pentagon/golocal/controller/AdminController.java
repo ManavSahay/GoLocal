@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.pentagon.golocal.dto.*;
 import com.pentagon.golocal.entity.*;
-import com.pentagon.golocal.repository.ProviderRepository;
 import com.pentagon.golocal.service.*;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
-import com.pentagon.golocal.repository.CustomerRepository;
 import com.pentagon.golocal.repository.UserRepository;
 
 @RestController

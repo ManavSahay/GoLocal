@@ -1,7 +1,6 @@
 package com.pentagon.golocal.controller;
 
 import com.pentagon.golocal.dto.UpdateProviderRequest;
-import com.pentagon.golocal.entity.Customer;
 import com.pentagon.golocal.entity.Provider;
 import com.pentagon.golocal.entity.Rating;
 import com.pentagon.golocal.service.ProviderService;

@@ -1,7 +1,6 @@
 package com.pentagon.golocal.controller;
 
 import com.pentagon.golocal.admin_register.AdminCreationAuthority;
-import jakarta.servlet.http.Cookie;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import com.pentagon.golocal.dto.*;
 import com.pentagon.golocal.service.AuthenticationService;
-import com.pentagon.golocal.service.UsersRegisterService;
 
 @RestController
 @CrossOrigin("http://localhost:5173")

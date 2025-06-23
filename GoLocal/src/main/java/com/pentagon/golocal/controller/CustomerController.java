@@ -1,11 +1,8 @@
 package com.pentagon.golocal.controller;
 
 import com.pentagon.golocal.dto.UpdateCustomerRequest;
-import com.pentagon.golocal.entity.Booking;
 import com.pentagon.golocal.entity.Customer;
-import com.pentagon.golocal.entity.Provider;
 import com.pentagon.golocal.entity.Rating;
-import com.pentagon.golocal.service.BookingService;
 import com.pentagon.golocal.service.CustomerService;
 import com.pentagon.golocal.service.ProviderService;
 import com.pentagon.golocal.service.RatingService;
@@ -14,8 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @CrossOrigin("http://localhost:5173")
