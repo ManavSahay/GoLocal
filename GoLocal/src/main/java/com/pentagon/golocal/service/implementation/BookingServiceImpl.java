@@ -8,6 +8,7 @@ import com.pentagon.golocal.service.BookingService;
 import com.pentagon.golocal.service.CustomerService;
 import com.pentagon.golocal.service.ProviderService;
 import com.pentagon.golocal.service.RatingService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
+    @Transactional
     public Booking bookService(String username, String typeOfJob, BookProvider bookProvider) {
         SimpleDateFormat format = new SimpleDateFormat("dd-MM-yyyy");
         Booking booking = new Booking();
@@ -51,6 +53,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
+    @Transactional
     public Booking revokeBooking(String bookingId) {
         Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new UsernameNotFoundException("Booking does not exists"));
 
@@ -64,6 +67,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
+    @Transactional
     public Booking acceptBooking(String bookingId) {
         Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new UsernameNotFoundException("Booking does not exists"));
 
@@ -78,6 +82,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
+    @Transactional
     public Booking rejectBooking(String bookingId) {
         Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new UsernameNotFoundException("Booking does not exists"));
 
@@ -91,6 +96,7 @@ public class BookingServiceImpl implements BookingService {
     }
 
     @Override
+    @Transactional
     public Booking completeService(String bookingId) {
         Booking booking = bookingRepository.findById(bookingId).orElseThrow(() -> new UsernameNotFoundException("Booking does not exists"));
 

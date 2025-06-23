@@ -9,6 +9,7 @@ import com.pentagon.golocal.service.BookingService;
 import com.pentagon.golocal.service.CustomerService;
 import com.pentagon.golocal.service.ProviderService;
 import com.pentagon.golocal.service.RatingService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,7 @@ public class RatingServiceImpl implements RatingService {
     @Autowired private BookingRepository bookingRepository;
 
     @Override
+    @Transactional
     public Rating rateProvider(String username, String bookingId, int ratingValue) {
         Rating rating = ratingRepository.findByBooking(bookingId).orElseThrow(
                 () -> new IllegalArgumentException("Not found!")
@@ -54,6 +56,7 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
+    @Transactional
     public Rating rateCustomer(String username, String bookingId, int ratingValue) {
         Rating rating = ratingRepository.findByBooking(bookingId).orElseThrow(
                 () -> new IllegalArgumentException("Not found!")
@@ -86,6 +89,7 @@ public class RatingServiceImpl implements RatingService {
     }
 
     @Override
+    @Transactional
     public Rating createRating(String ratingId, String bookingId) {
         Rating rating = new Rating();
         rating.setRatingId(ratingId);

@@ -12,7 +12,7 @@ public class UpdateProviderRequest {
     private String location;
     private Long mobileNumber;
     private String email;
-    private byte[] profilePicture;
+    private String profilePicture;
     private ServiceEntity service;
     private int experience;
     private String description;

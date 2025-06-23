@@ -8,6 +8,7 @@ import com.pentagon.golocal.repository.ServicesRepository;
 import com.pentagon.golocal.service.CustomerService;
 import com.pentagon.golocal.service.ProviderService;
 import com.pentagon.golocal.service.ServicesService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,7 @@ import com.pentagon.golocal.repository.ProviderRepository;
 import com.pentagon.golocal.service.UsersRegisterService;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 
 @Service
 public class UserRegisterServiceImpl implements UsersRegisterService {
@@ -30,6 +32,7 @@ public class UserRegisterServiceImpl implements UsersRegisterService {
 	@Autowired ServicesRepository servicesRepository;
 
 	@Override
+	@Transactional
 	public Customer registerCustomer(RegisterCustomerRequest registerCustomerRequest) {
 		Customer customer = new Customer();
 		customer.setUsername(registerCustomerRequest.getUsername());
@@ -38,13 +41,14 @@ public class UserRegisterServiceImpl implements UsersRegisterService {
 		customer.setMobileNumber(registerCustomerRequest.getMobileNumber());
 		customer.setEmail(registerCustomerRequest.getEmail());
 		customer.setRating(0);
-		customer.setProfilePicture(registerCustomerRequest.getProfilePicture());
+		customer.setProfilePicture(Base64.getDecoder().decode(registerCustomerRequest.getProfilePicture()));
 		customer.setNoOfBookings(0);
 		
 		return customerService.createCustomer(customer);
 	}
 
 	@Override
+	@Transactional
 	public Provider registerProvider(RegisterProviderRequest registerProviderRequest) {
 		Provider provider = new Provider();
 		provider.setUsername(registerProviderRequest.getUsername());
@@ -53,7 +57,7 @@ public class UserRegisterServiceImpl implements UsersRegisterService {
 		provider.setMobileNumber(registerProviderRequest.getMobileNumber());
 		provider.setEmail(registerProviderRequest.getEmail());
 		provider.setRating(0);
-		provider.setProfilePicture(registerProviderRequest.getProfilePicture());
+		provider.setProfilePicture(Base64.getDecoder().decode(registerProviderRequest.getProfilePicture()));
 		provider.setService(registerProviderRequest.getService());
 		provider.setExperience(registerProviderRequest.getExperience());
 		provider.setDescription(registerProviderRequest.getDescription().getBytes(StandardCharsets.UTF_8));
@@ -63,6 +67,7 @@ public class UserRegisterServiceImpl implements UsersRegisterService {
 	}
 
 	@Override
+	@Transactional
 	public Admin registerAdmin(RegisterAdminRequest registerRequest) {
 		Admin admin = new Admin();
 		admin.setAdminId(registerRequest.getUsername());

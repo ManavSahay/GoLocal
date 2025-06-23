@@ -5,9 +5,11 @@ import com.pentagon.golocal.entity.Customer;
 import com.pentagon.golocal.repository.CustomerRepository;
 import com.pentagon.golocal.repository.UserRepository;
 import com.pentagon.golocal.service.CustomerService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -16,6 +18,7 @@ public class CustomerServiceImpl implements CustomerService {
     @Autowired UserRepository userRepository;
 
     @Override
+    @Transactional
     public Customer createCustomer(Customer customer) {
         Customer isExistingCustomer = customerRepository.findById(customer.getUsername()).orElse(null);
 
@@ -39,6 +42,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    @Transactional
     public Customer deleteCustomer(String customerId) {
         Customer deletedCustomer = customerRepository.findById(customerId).orElseThrow(
                 () -> new IllegalArgumentException("Customer does not exist!")
@@ -54,6 +58,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    @Transactional
     public Customer updateCustomer(String customerId, UpdateCustomerRequest updateCustomerRequest) {
         Customer updatedCustomer = customerRepository.findById(customerId).orElseThrow(
                 () -> new IllegalArgumentException("Customer does not exist!")
@@ -67,12 +72,13 @@ public class CustomerServiceImpl implements CustomerService {
         updatedCustomer.setLocation(updateCustomerRequest.getLocation());
         updatedCustomer.setMobileNumber(updateCustomerRequest.getMobileNumber());
         updatedCustomer.setEmail(updateCustomerRequest.getEmail());
-        updatedCustomer.setProfilePicture(updateCustomerRequest.getProfilePicture());
+        updatedCustomer.setProfilePicture(Base64.getDecoder().decode(updateCustomerRequest.getProfilePicture()));
 
         return customerRepository.save(updatedCustomer);
     }
 
     @Override
+    @Transactional
     public Customer increateNumberOfBookings(String customerId) {
         Customer customer = customerRepository.findById(customerId).orElse(null);
 
@@ -85,6 +91,7 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
+    @Transactional
     public void updateRating(String customerId, int rating) {
         Customer customer = customerRepository.findById(customerId).orElseThrow(
                 () -> new IllegalArgumentException("Customer not found!")

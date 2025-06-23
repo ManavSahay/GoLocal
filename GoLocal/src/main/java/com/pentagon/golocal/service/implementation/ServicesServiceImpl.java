@@ -4,6 +4,7 @@ import com.pentagon.golocal.dto.RegisterServiceRequest;
 import com.pentagon.golocal.entity.ServiceEntity;
 import com.pentagon.golocal.repository.ServicesRepository;
 import com.pentagon.golocal.service.ServicesService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -13,6 +14,7 @@ import java.util.List;
 @Service
 public class ServicesServiceImpl implements ServicesService {
     @Autowired ServicesRepository servicesRepository;
+
     @Override
     public ServiceEntity getServiceById(String serviceId) {
         return servicesRepository.findById(serviceId).orElseThrow(() -> new UsernameNotFoundException("Service doesn't exist"));
@@ -24,6 +26,7 @@ public class ServicesServiceImpl implements ServicesService {
     }
 
     @Override
+    @Transactional
     public ServiceEntity createService(RegisterServiceRequest registerServiceRequest) {
 
         if(servicesRepository.existsByServiceId(registerServiceRequest.getServiceId())) {
@@ -37,25 +40,15 @@ public class ServicesServiceImpl implements ServicesService {
     }
 
     @Override
+    @Transactional
     public ServiceEntity increaseProviderCount(ServiceEntity service) {
-//        ServiceEntity service = servicesRepository.findById(serviceId).orElse(null);
-//
-//        if (service == null) {
-//            return null;
-//        }
-
         service.setNoOfProviders(servicesRepository.getNoOfProviders(service.getServiceId()) + 1);
         return servicesRepository.save(service);
     }
 
     @Override
+    @Transactional
     public ServiceEntity decreaseProviderCount(ServiceEntity service) {
-//        ServiceEntity service = servicesRepository.findById(serviceId).orElse(null);
-//
-//        if (service == null) {
-//            return null;
-//        }
-
         service.setNoOfProviders(servicesRepository.getNoOfProviders(service.getServiceId()) + 1);
         return servicesRepository.save(service);
     }

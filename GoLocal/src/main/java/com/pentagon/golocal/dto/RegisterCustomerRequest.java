@@ -11,6 +11,6 @@ public class RegisterCustomerRequest extends RegisterRequest {
 	private String location;
 	private Long mobileNumber;
 	private String email;
-	private byte[] profilePicture;
+	private String profilePicture;
 
 }

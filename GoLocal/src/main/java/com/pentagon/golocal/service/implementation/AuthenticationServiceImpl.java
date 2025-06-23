@@ -95,10 +95,12 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     }
 
 	@Override
+	@Transactional
 	public void deleteUser(String userId) {
 		userRepository.deleteById(userId);
 	}
 
+	@Transactional
 	private void saveUserToken(TokenPair tokenPair, User user) {
 		Token token = new Token();
 		token.setToken(tokenPair.getAccessToken());
@@ -108,6 +110,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		tokenRepository.save(token);
 	}
 
+	@Transactional
 	private void revokeAllTokensFromUser(User user) {
 		List<Token> validTokenListByUser = tokenRepository.findAllTokenByUser(user.getUsername());
 

@@ -7,10 +7,12 @@ import com.pentagon.golocal.repository.ProviderRepository;
 import com.pentagon.golocal.repository.UserRepository;
 import com.pentagon.golocal.service.ProviderService;
 import com.pentagon.golocal.service.ServicesService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.nio.charset.StandardCharsets;
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -20,6 +22,7 @@ public class ProviderServiceImpl implements ProviderService {
     @Autowired ServicesService servicesService;
 
     @Override
+    @Transactional
     public Provider createProvider(Provider provider) {
         if (providerRepository.existsByProviderId(provider.getUsername()) != null) {
             return null;
@@ -40,6 +43,7 @@ public class ProviderServiceImpl implements ProviderService {
     }
 
     @Override
+    @Transactional
     public Provider deleteProvider(String providerId) {
         Provider deletedProvider = providerRepository.findById(providerId).orElse(null);
 
@@ -54,6 +58,7 @@ public class ProviderServiceImpl implements ProviderService {
     }
 
     @Override
+    @Transactional
     public Provider updateProvider(String providerId, UpdateProviderRequest provider) {
         Provider findProvider = providerRepository.findById(providerId).orElse(null);
 
@@ -65,7 +70,7 @@ public class ProviderServiceImpl implements ProviderService {
         findProvider.setLocation(provider.getLocation());
         findProvider.setMobileNumber(provider.getMobileNumber());
         findProvider.setEmail(provider.getEmail());
-        findProvider.setProfilePicture(provider.getProfilePicture());
+        findProvider.setProfilePicture(Base64.getDecoder().decode(provider.getProfilePicture()));
         findProvider.setService(provider.getService());
         findProvider.setExperience(provider.getExperience());
         findProvider.setDescription(provider.getDescription().getBytes(StandardCharsets.UTF_8));
@@ -84,6 +89,7 @@ public class ProviderServiceImpl implements ProviderService {
     }
 
     @Override
+    @Transactional
     public Provider increaseNoOfTimesBooked(String providerId) {
         Provider provider = providerRepository.findById(providerId).orElse(null);
 
@@ -96,6 +102,7 @@ public class ProviderServiceImpl implements ProviderService {
     }
 
     @Override
+    @Transactional
     public void updateRating(String providerId, int rating) {
         Provider provider = providerRepository.findById(providerId).orElseThrow(
                 () -> new IllegalArgumentException("Provider not found!")
