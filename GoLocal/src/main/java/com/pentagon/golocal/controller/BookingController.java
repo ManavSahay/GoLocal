@@ -4,6 +4,7 @@ import com.pentagon.golocal.dto.BookProvider;
 import com.pentagon.golocal.entity.Booking;
 import com.pentagon.golocal.service.BookingService;
 import com.pentagon.golocal.service.RatingService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class BookingController {
 
     @PostMapping("/book-request/{typeOfJob}/{customerId}")
     @PreAuthorize("hasRole('CUSTOMER')")
-    public ResponseEntity<?> bookProvider(@PathVariable String customerId, @PathVariable String typeOfJob, @RequestBody BookProvider bookProvider) {
+    public ResponseEntity<?> bookProvider(@PathVariable String customerId, @PathVariable String typeOfJob,@Valid @RequestBody BookProvider bookProvider) {
         Booking booking = bookingService.bookService(customerId, typeOfJob, bookProvider);
         return ResponseEntity.ok(booking);
     }

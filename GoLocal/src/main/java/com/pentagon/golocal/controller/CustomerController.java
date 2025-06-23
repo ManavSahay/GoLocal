@@ -9,6 +9,7 @@ import com.pentagon.golocal.service.BookingService;
 import com.pentagon.golocal.service.CustomerService;
 import com.pentagon.golocal.service.ProviderService;
 import com.pentagon.golocal.service.RatingService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -27,7 +28,7 @@ public class CustomerController {
 
     @PutMapping("/update-customer/{customerId}")
     public ResponseEntity<?> updateCustomer(@PathVariable String customerId,
-                                            @RequestBody UpdateCustomerRequest updateCustomerRequest) {
+                                            @Valid @RequestBody UpdateCustomerRequest updateCustomerRequest) {
         Customer customer = customerService.updateCustomer(customerId, updateCustomerRequest);
         return ResponseEntity.ok(customer);
     }

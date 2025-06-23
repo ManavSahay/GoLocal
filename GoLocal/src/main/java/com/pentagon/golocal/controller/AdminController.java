@@ -6,6 +6,7 @@ import com.pentagon.golocal.dto.*;
 import com.pentagon.golocal.entity.*;
 import com.pentagon.golocal.repository.ProviderRepository;
 import com.pentagon.golocal.service.*;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -53,13 +54,13 @@ public class AdminController {
 	}
 
 	@PostMapping("/create-customer")
-	public ResponseEntity<?> createCustomer(@RequestBody RegisterCustomerRequest registerRequest) {
+	public ResponseEntity<?> createCustomer(@Valid @RequestBody RegisterCustomerRequest registerRequest) {
 		authenticationService.registerUser(registerRequest);
 		return ResponseEntity.ok("Customer created!");
 	}
 
 	@PutMapping("/update-customer/{customerId}")
-	public ResponseEntity<?> updateCustomer(@PathVariable String customerId, @RequestBody UpdateCustomerRequest updateCustomerRequest) {
+	public ResponseEntity<?> updateCustomer(@PathVariable String customerId, @Valid @RequestBody UpdateCustomerRequest updateCustomerRequest) {
 		Customer updatedCustomer = customerService.updateCustomer(customerId, updateCustomerRequest);
 
 		if (updatedCustomer == null) {
@@ -98,13 +99,13 @@ public class AdminController {
 	}
 
 	@PostMapping("/create-provider")
-	public ResponseEntity<?> registerProvider(@RequestBody RegisterProviderRequest registerRequest) {
+	public ResponseEntity<?> registerProvider(@Valid @RequestBody RegisterProviderRequest registerRequest) {
 		authenticationService.registerUser(registerRequest);
 		return ResponseEntity.ok(registerRequest);
 	}
 
 	@PutMapping("/update-provider/{providerId}")
-	public ResponseEntity<?> updateProvider(@PathVariable String providerId, @RequestBody UpdateProviderRequest updateProviderRequest) {
+	public ResponseEntity<?> updateProvider(@PathVariable String providerId, @Valid @RequestBody UpdateProviderRequest updateProviderRequest) {
 		Provider updatedProvider = providerService.updateProvider(providerId, updateProviderRequest);
 
 		return ResponseEntity.ok(updatedProvider);
@@ -140,7 +141,7 @@ public class AdminController {
 	}
 
 	@PostMapping("/create-service")
-	public ResponseEntity<?> createService(@RequestBody RegisterServiceRequest registerServiceRequest) {
+	public ResponseEntity<?> createService(@Valid @RequestBody RegisterServiceRequest registerServiceRequest) {
 		ServiceEntity service = servicesService.createService(registerServiceRequest);
 		if (service == null) {
 			return new ResponseEntity<>("Service already exist", HttpStatus.BAD_REQUEST);

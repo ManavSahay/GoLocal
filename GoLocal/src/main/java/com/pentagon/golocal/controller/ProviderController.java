@@ -6,6 +6,7 @@ import com.pentagon.golocal.entity.Provider;
 import com.pentagon.golocal.entity.Rating;
 import com.pentagon.golocal.service.ProviderService;
 import com.pentagon.golocal.service.RatingService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -22,7 +23,7 @@ public class ProviderController {
 
     @PutMapping("/update-provider/{providerId}")
     public ResponseEntity<?> updateProvider(@PathVariable String providerId,
-                                            @RequestBody UpdateProviderRequest updateProviderRequest) {
+                                            @Valid @RequestBody UpdateProviderRequest updateProviderRequest) {
         Provider provider = providerService.updateProvider(providerId, updateProviderRequest);
 
         return ResponseEntity.ok(provider);

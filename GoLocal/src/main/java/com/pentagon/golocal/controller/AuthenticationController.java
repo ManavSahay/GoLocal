@@ -2,6 +2,7 @@ package com.pentagon.golocal.controller;
 
 import com.pentagon.golocal.admin_register.AdminCreationAuthority;
 import jakarta.servlet.http.Cookie;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,19 +21,19 @@ public class AuthenticationController {
 	@Autowired AdminCreationAuthority adminCreationAuthority;
 	
 	@PostMapping("/register-provider")
-	public ResponseEntity<?> registerProvider(@RequestBody RegisterProviderRequest registerRequest) {
+	public ResponseEntity<?> registerProvider(@Valid @RequestBody RegisterProviderRequest registerRequest) {
 		authenticationService.registerUser(registerRequest);
 		return ResponseEntity.ok(registerRequest);
 	}
 	
 	@PostMapping("/register-customer")
-	public ResponseEntity<?> registerCustomer(@RequestBody RegisterCustomerRequest registerRequest) {
+	public ResponseEntity<?> registerCustomer(@Valid @RequestBody RegisterCustomerRequest registerRequest) {
 		authenticationService.registerUser(registerRequest);
 		return ResponseEntity.ok(registerRequest);
 	}
 
 	@PostMapping("/register-admin/{secretKey}")
-	public ResponseEntity<?> registerAdmin(@PathVariable String secretKey, @RequestBody RegisterAdminRequest registerRequest) {
+	public ResponseEntity<?> registerAdmin(@PathVariable String secretKey,@Valid  @RequestBody RegisterAdminRequest registerRequest) {
 		if (!adminCreationAuthority.canCreateAdmin(secretKey)) {
 			return new ResponseEntity<>("You cannot create an Admin!", HttpStatus.BAD_REQUEST);
 		}
@@ -41,7 +42,7 @@ public class AuthenticationController {
 	}
 	
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+	public ResponseEntity<?> login(@Valid @RequestBody LoginRequest loginRequest) {
 		TokenPair tokenPair = authenticationService.login(loginRequest);
 		
 		if (tokenPair == null) {
