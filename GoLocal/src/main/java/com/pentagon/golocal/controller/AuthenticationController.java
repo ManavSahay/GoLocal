@@ -1,12 +1,16 @@
 package com.pentagon.golocal.controller;
 
 import com.pentagon.golocal.admin_register.AdminCreationAuthority;
+import com.pentagon.golocal.entity.ServiceEntity;
+import com.pentagon.golocal.service.ServicesService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import com.pentagon.golocal.dto.*;
 import com.pentagon.golocal.service.AuthenticationService;
@@ -16,6 +20,7 @@ import com.pentagon.golocal.service.AuthenticationService;
 @RequestMapping("/api/auth")
 public class AuthenticationController {
 	@Autowired AuthenticationService authenticationService;
+	@Autowired private ServicesService servicesService;
 	@Autowired AdminCreationAuthority adminCreationAuthority;
 	
 	@PostMapping("/register-provider")
@@ -54,5 +59,11 @@ public class AuthenticationController {
 	public ResponseEntity<?> getMyUsername() {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		return ResponseEntity.ok(username);
+	}
+
+	@GetMapping("/get-all-services")
+	public ResponseEntity<?> getAllServices() {
+		List<ServiceEntity> services = servicesService.getAllServices();
+		return ResponseEntity.ok(services);
 	}
 }
