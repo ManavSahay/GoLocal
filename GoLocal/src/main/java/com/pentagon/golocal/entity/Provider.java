@@ -35,7 +35,7 @@ public class Provider {
 	private int rating;
 	
 	@Lob
-	@Column(name = "profile_picture", columnDefinition = "BLOB")
+	@Column(name = "profile_picture", columnDefinition = "MEDIUMBLOB")
 	private byte[] profilePicture;
 	
 	@JoinColumn(name = "service")

@@ -41,7 +41,7 @@ public class UserRegisterServiceImpl implements UsersRegisterService {
 		customer.setMobileNumber(registerCustomerRequest.getMobileNumber());
 		customer.setEmail(registerCustomerRequest.getEmail());
 		customer.setRating(0);
-		customer.setProfilePicture(Base64.getMimeDecoder().decode(registerCustomerRequest.getProfilePicture()));
+		customer.setProfilePicture(Base64.getDecoder().decode(registerCustomerRequest.getProfilePicture()));
 		customer.setNoOfBookings(0);
 		
 		return customerService.createCustomer(customer);
@@ -57,7 +57,7 @@ public class UserRegisterServiceImpl implements UsersRegisterService {
 		provider.setMobileNumber(registerProviderRequest.getMobileNumber());
 		provider.setEmail(registerProviderRequest.getEmail());
 		provider.setRating(0);
-		provider.setProfilePicture(Base64.getMimeDecoder().decode(registerProviderRequest.getProfilePicture()));
+		provider.setProfilePicture(Base64.getDecoder().decode(registerProviderRequest.getProfilePicture()));
 		provider.setService(registerProviderRequest.getService());
 		provider.setExperience(registerProviderRequest.getExperience());
 		provider.setDescription(registerProviderRequest.getDescription().getBytes(StandardCharsets.UTF_8));

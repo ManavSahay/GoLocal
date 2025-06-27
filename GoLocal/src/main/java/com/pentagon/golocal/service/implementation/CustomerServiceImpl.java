@@ -72,7 +72,7 @@ public class CustomerServiceImpl implements CustomerService {
         updatedCustomer.setLocation(updateCustomerRequest.getLocation());
         updatedCustomer.setMobileNumber(updateCustomerRequest.getMobileNumber());
         updatedCustomer.setEmail(updateCustomerRequest.getEmail());
-        updatedCustomer.setProfilePicture(Base64.getMimeDecoder().decode(updateCustomerRequest.getProfilePicture()));
+        updatedCustomer.setProfilePicture(Base64.getDecoder().decode(updateCustomerRequest.getProfilePicture()));
 
         return customerRepository.save(updatedCustomer);
     }

@@ -70,7 +70,7 @@ public class ProviderServiceImpl implements ProviderService {
         findProvider.setLocation(provider.getLocation());
         findProvider.setMobileNumber(provider.getMobileNumber());
         findProvider.setEmail(provider.getEmail());
-        findProvider.setProfilePicture(Base64.getMimeDecoder().decode(provider.getProfilePicture()));
+        findProvider.setProfilePicture(Base64.getDecoder().decode(provider.getProfilePicture()));
         findProvider.setService(provider.getService());
         findProvider.setExperience(provider.getExperience());
         findProvider.setDescription(provider.getDescription().getBytes(StandardCharsets.UTF_8));
