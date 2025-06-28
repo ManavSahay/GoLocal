@@ -42,7 +42,6 @@ public class Customer {
 	private int noOfBookings;
 
 	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
-	@JoinColumn(name = "bookings")
 	@JsonIgnore
 	private List<Booking> bookings;
 
