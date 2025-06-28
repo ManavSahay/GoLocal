@@ -41,9 +41,9 @@ public class Customer {
 	@Column(name = "no_of_bookings")
 	private int noOfBookings;
 
-//	@OneToMany
-//	@JoinColumn(name = "bookings")
-//	@JsonIgnore
-//	private List<Booking> bookings;
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "bookings")
+	@JsonIgnore
+	private List<Booking> bookings;
 
 }

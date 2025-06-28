@@ -8,6 +8,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -53,8 +55,8 @@ public class Provider {
 	@Column(name = "no_of_times_booked")
 	private int noOfTimesBooked;
 
-//	@OneToMany
-//	@JoinColumn(name = "booked_by")
-//	@JsonIgnore
-//	private List<Booking> bookings;
+	@OneToMany(mappedBy = "provider", cascade = CascadeType.ALL, orphanRemoval = true)
+	@JoinColumn(name = "booked_by")
+	@JsonIgnore
+	private List<Booking> bookings;
 }
