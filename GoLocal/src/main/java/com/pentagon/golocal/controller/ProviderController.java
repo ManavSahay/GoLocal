@@ -38,8 +38,8 @@ public class ProviderController {
     }
 
     @GetMapping("/get-profile/{providerId}")
-    public ResponseEntity<?> getProfile(@PathVariable String customerId) {
-        Provider provider = providerService.getProvider(customerId);
+    public ResponseEntity<?> getProfile(@PathVariable String providerId) {
+        Provider provider = providerService.getProvider(providerId);
 
         return ResponseEntity.ok(provider);
     }
