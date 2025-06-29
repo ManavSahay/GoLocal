@@ -29,7 +29,7 @@ public class User {
 	@Column(name = "is_deleted")
 	private boolean isDeleted;
 
-	@OneToMany(mappedBy = "user")
+	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
 	@JsonIgnore
 	private List<Token> tokens;
 

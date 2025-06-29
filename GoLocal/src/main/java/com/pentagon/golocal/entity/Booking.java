@@ -3,7 +3,7 @@ package com.pentagon.golocal.entity;
 import java.util.Date;
 import java.util.List;
 
-import com.pentagon.golocal.entity.Provider;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -42,4 +42,8 @@ public class Booking {
 	
 	@Column(name = "status")
 	private BookingStatus status;
+
+	@OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
+	@JsonIgnore
+	Rating rating;
 }
