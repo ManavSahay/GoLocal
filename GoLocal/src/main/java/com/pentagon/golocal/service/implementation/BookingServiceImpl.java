@@ -4,10 +4,7 @@ import com.pentagon.golocal.dto.BookProvider;
 import com.pentagon.golocal.entity.Booking;
 import com.pentagon.golocal.entity.BookingStatus;
 import com.pentagon.golocal.repository.BookingRepository;
-import com.pentagon.golocal.service.BookingService;
-import com.pentagon.golocal.service.CustomerService;
-import com.pentagon.golocal.service.ProviderService;
-import com.pentagon.golocal.service.RatingService;
+import com.pentagon.golocal.service.*;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -23,6 +20,7 @@ public class BookingServiceImpl implements BookingService {
     @Autowired private ProviderService providerService;
     @Autowired private CustomerService customerService;
     @Autowired private RatingService ratingService;
+    @Autowired private ServicesService servicesService;
 
     @Override
     public List<Booking> getBookedRequests(String username) {
@@ -46,7 +44,7 @@ public class BookingServiceImpl implements BookingService {
         booking.setLocation(bookProvider.getLocation());
         booking.setDateTime(bookProvider.getDateTime());
         booking.setAmountPaid(bookProvider.getAmount());
-        booking.setTypeOfJob(typeOfJob);
+        booking.setService(servicesService.getServiceById(typeOfJob));
         booking.setStatus(BookingStatus.REQUESTED);
 
         return bookingRepository.save(booking);

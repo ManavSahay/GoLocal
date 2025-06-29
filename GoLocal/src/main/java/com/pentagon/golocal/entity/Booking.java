@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,8 +38,10 @@ public class Booking {
 	@Column(name = "amount_paid")
 	private float amountPaid;
 	
-	@Column(name = "type_of_job")
-	private String typeOfJob;
+	@JoinColumn(name = "service")
+	@ManyToOne
+	@JsonProperty("service")
+	private ServiceEntity service;
 	
 	@Column(name = "status")
 	private BookingStatus status;
