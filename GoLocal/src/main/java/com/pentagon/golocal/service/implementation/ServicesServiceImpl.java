@@ -49,7 +49,7 @@ public class ServicesServiceImpl implements ServicesService {
     @Override
     @Transactional
     public ServiceEntity decreaseProviderCount(ServiceEntity service) {
-        service.setNoOfProviders(servicesRepository.getNoOfProviders(service.getServiceId()) + 1);
+        service.setNoOfProviders(servicesRepository.getNoOfProviders(service.getServiceId()) - 1);
         return servicesRepository.save(service);
     }
 }
