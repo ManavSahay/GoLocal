@@ -1,0 +1,14 @@
+/* src/components/Common/StarRating.css */
+
+.star-rating {
+    display: inline-block;
+    margin: 10px 0;
+  }
+  
+  .star-filled {
+    color: gold;
+  }
+  
+  .star-empty {
+    color: gray;
+  }
